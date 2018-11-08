@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'sessions/welcome'
+  root 'sessions#welcome'
   get 'sessions/new'
   get 'sessions/create'
   get 'connections/index'
