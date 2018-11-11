@@ -28,13 +28,13 @@ gem 'bootstrap', '~> 4.1.3'
 gem 'jquery-rails'
 
 gem 'faker'
+gem 'gravatar-ultimate'
 gem 'hirb'
 # Use ActiveModel has_secure_password
 gem 'bcrypt'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'dotenv-rails'
-
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 

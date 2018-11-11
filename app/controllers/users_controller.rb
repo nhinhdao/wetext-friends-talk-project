@@ -8,6 +8,23 @@ class UsersController < ApplicationController
   end
 
   def create
+    if params[:password] == params[:password_confirmation]
+      @user = User.new(users_params)
+      if @user && @user.save
+        @user.update(image: Gravatar.new("#{@user.email}").image_url + "?d=wavatar")
+        session[:current_user_id] = @user.id
+        flash[:signup_success] = "Thank you for signing up"
+        render 'sessions/welcome'
+      else
+        render 'new'
+      end
+    else
+      render 'new'
+    end
+  end
+
+  def show
+
   end
 
   def edit
@@ -19,5 +36,11 @@ class UsersController < ApplicationController
   end
 
   def destroy
+  end
+
+  private
+
+  def users_params
+    params.require(:user).permit(:username, :email, :password, :password_confirmation)
   end
 end

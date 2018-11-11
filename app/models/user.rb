@@ -7,6 +7,9 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
   validates :password, presence: true, on: :create
+  validates :password_confirmation, presence: true, on: :create
 
   has_secure_password
+
+  scope :other_users, ->(user) { where.not(:id => user.id) }
 end

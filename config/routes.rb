@@ -8,11 +8,11 @@ Rails.application.routes.draw do
 
   resources :connections
 
-  
+
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
-  get 'signup' => 'users/new'
-  post 'signup' => 'users/create'
+  get 'signup' => 'users#new'
+  post 'signup' => 'users#create'
   get '/auth/facebook/callback' => 'sessions#create'
-  post 'logout' => 'sessions#destroy'
+  delete 'logout' => 'sessions#destroy'
 end

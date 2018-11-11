@@ -1,8 +1,11 @@
 class SessionsController < ApplicationController
   def welcome
     if !logged_in?
-      redirect_to 'login'
+      redirect_to '/login'
     else
+      @user = User.find(session[:current_user_id])
+      @messages = Message.inbox(@user)
+      @feeds = Post.new_feeds(@user).take(3)
       render :welcome
     end
   end
@@ -12,14 +15,14 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if params[:email].present? && params[:password].present? #user logged in through form provided in the home page
-      user = User.find_by(:email => params[:email])
-      if user && user.authenticate(params[:password])
-        user.image = Faker::Avatar.image
+    if params[:username].present? && params[:password].present? #user logged in through form provided in the home page
+      @user = User.find_by(:username => params[:username])
+      if @user && @user.authenticate(params[:password])
         session[:current_user_id] = @user.id
-        redirect_to '/'
+        flash[:login_success] = "Welcome back, #{@user.username}"
+        render :welcome
       else
-        flash.now[:notice] = "Could not find that person, sorry!"
+        flash[:notice] = "Hmm, We can't find you. Sorry, please try again!"
         render :new
       end
     elsif request.env['omniauth.auth'].present? #user logged in through facebook
@@ -29,7 +32,8 @@ class SessionsController < ApplicationController
         u.image = auth['info']['image']
       end
       session[:current_user_id] = @user.id
-      redirect_to '/'
+      flash[:login_success] = "Thank you for checking in, #{@user.username}"
+      render :welcome
     end
   end
 
