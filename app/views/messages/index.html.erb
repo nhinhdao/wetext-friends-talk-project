@@ -1,2 +1,27 @@
 <h1>Messages#index</h1>
 <p>Find me in app/views/messages/index.html.erb</p>
+
+
+<div style="max-width: 60%">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Inbox</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @messages.each do|m|%>
+      <tr>
+        <td>
+          <img src="<%= m.user.image %>" style="width: 40px">
+          <span><%= link_to m.user.username, '#' %></span>
+          <div><%= m.mcontent %></div>
+        </td>
+      </tr>
+      <% end %>
+      <tr>
+        <td><%= link_to 'View all messages', '#', class: "justify-content-center"%></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -33,6 +33,9 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
+    @user.update(users_params)
+    flash[:update_success] = "Successfully updated."
+    redirect_to '/'
   end
 
   def destroy

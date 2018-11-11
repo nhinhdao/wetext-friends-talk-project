@@ -4,8 +4,7 @@ class SessionsController < ApplicationController
       redirect_to '/login'
     else
       @user = User.find(session[:current_user_id])
-      @messages = Message.inbox(@user)
-      @feeds = Post.new_feeds(@user).take(3)
+      @feeds = Post.take(4)
       render :welcome
     end
   end
@@ -19,8 +18,8 @@ class SessionsController < ApplicationController
       @user = User.find_by(:username => params[:username])
       if @user && @user.authenticate(params[:password])
         session[:current_user_id] = @user.id
-        flash[:login_success] = "Welcome back, #{@user.username}"
-        render :welcome
+        flash[:message] = "Welcome back, #{@user.username}"
+        redirect_to '/'
       else
         flash[:notice] = "Hmm, We can't find you. Sorry, please try again!"
         render :new
@@ -32,8 +31,8 @@ class SessionsController < ApplicationController
         u.image = auth['info']['image']
       end
       session[:current_user_id] = @user.id
-      flash[:login_success] = "Thank you for checking in, #{@user.username}"
-      render :welcome
+      flash[:message] = "Thank you for checking in, #{@user.username}"
+      redirect_to '/'
     end
   end
 

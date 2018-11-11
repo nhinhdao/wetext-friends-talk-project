@@ -1,60 +1,49 @@
-<% if flash[:signup_success] %>
-    <div class="alert alert-success"><%= flash[:signup_success] %></div>
-<% elsif flash[:login_success] %>
-    <div class="alert alert-success"><%= flash[:login_success] %></div>
-<% end %><br>
+<% if flash[:message] %>
+    <div class="alert alert-success"><%= flash[:message] %></div>
+<% end %>
 
 
   <div class="container">
     <div class="row">
       <div class="col-sm-1.5">
-        <img src="<%= @user.image %>" style="width: 100px">
+        <img src="<%= @user.image %>" style="width: 80px">
       </div>
-      <div class="col-sm-9">
-        <strong><p><%= @user.username %></p></strong>
-        <p><%= @user.email %></p>
-        <p><%= link_to 'Update Profile', edit_user_path(@user) %></p>
+      <div class="col-sm-9" style="font-size: 1em">
+        <p></p>
+        <strong><div><%= @user.username %></div></strong>
+        <div><%= @user.email %></div>
+        <div><%= link_to 'Update Profile', edit_user_path(@user) %></div>
       </div>
     </div>
-  </div>
-
-  <div class="container">
-    <div class="row">
-
-      <div class="col" style="border: solid 1px">
-        <h3>New Feed</h3>
-        <%= byebug %>
+    <hr>
+    <div style="max-width: 80%">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th class="text-center text-info"><h3>New Feeds</h3></th>
+          </tr>
+        </thead>
+        <tbody>
         <% @feeds.each do|f|%>
-        <li class="list-unstyled" style="font-size: 0.8em">
-          <img src="<%= f.user.image %>" style="max-width: 13%">
-          <span><%= link_to f.user.username, '#'%></span>
-          <span class="content"><%= f.pcontent %></span>
-          <span class="timestamp" style="font-size: 0.5em"> Posted <%= f.created_at.strftime('%c') %>
-            <% if f.user == @user %>
-              <%= link_to "delete", user_post_path(f), method: :delete%>
-            <% end %>
-          </span>
-        </li>
+          <tr>
+            <td><img src="<%= f.user.image %>" style="width: 50px"></td>
+            <td>
+              <span><%= link_to f.user.username, '#'%></span>
+              <span style="font-size: 0.6em"> Posted <%= f.created_at.strftime('%c') %>
+                <% if f.user == @user %>
+                <strong><%= link_to "Delete", post_path(f), method: :delete%></strong>
+                <% end %>
+              </span>
+              <div><%= f.pcontent %></div>
+            </td>
+          </tr>
         <% end %>
-      </div>
-
-      <div class="col" style="border: solid 1px">
-        <h3>Messages</h3>
-        <% @messages.each do|f|%>
-        <li>
-          <img src="<%= f.user.image %>" style="width: 50px">
-          <span><%= f.user.usesname%></span>
-          <span class="content">
-            <%= f.mcontent %>
-          </span>
-          <span class="timestamp">
-            Posted <%= f.created_at.strftime('%c') %>
-            <% if f.user == @user %>
-              <%= link_to "delete", user_post_path(f), method: :delete%>
-            <% end %>
-          </span>
-        </li>
-        <% end %>
-      </div>
+          <tr>
+            <td></td>
+            <td class="text-center"><%= link_to 'View all feeds', '#', class: "justify-content-center"%></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
