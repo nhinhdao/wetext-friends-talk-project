@@ -1,12 +1,12 @@
 
-a = User.create(username: "robindao", email: "nhinhdao.vn@gmail.com", image: Faker::Avatar.image, password: 'nhinh12345')
+a = User.create(username: "robindao", email: "nhinhdao.vn@gmail.com", image: Faker::Avatar.image, password: 'nhinh12345', password_confirmation: 'nhinh12345')
 
 9.times do |account|
   username = Faker::Internet.unique.username
   email = Faker::Internet.unique.email(username)
   image = Gravatar.new("#{email}").image_url + '?d=wavatar'
   password = 'nhinh12345'
-  User.create(username: username, email: email, image: image, password: password)
+  User.create(username: username, email: email, image: image, password: password, password_confirmation: password)
 end
 
 
