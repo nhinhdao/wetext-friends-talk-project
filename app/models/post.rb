@@ -3,5 +3,5 @@ class Post < ApplicationRecord
 
   validates :pcontent, presence: true
 
-  scope :new_feeds, ->(user) { where.not(user_id: user.id) }
+  scope :new_feeds, -> {order(created_at: :desc)}
 end

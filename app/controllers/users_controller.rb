@@ -24,7 +24,7 @@ class UsersController < ApplicationController
   end
 
   def show
-
+    @user = User.find(params[:id])
   end
 
   def edit
@@ -33,9 +33,12 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    @user.update(users_params)
-    flash[:update_success] = "Successfully updated."
-    redirect_to '/'
+    if @user.update(users_params)
+      flash[:message] = "Successfully updated."
+      redirect_to '/'
+    else
+      render :edit
+    end
   end
 
   def destroy

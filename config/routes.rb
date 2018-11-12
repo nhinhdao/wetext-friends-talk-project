@@ -7,7 +7,8 @@ Rails.application.routes.draw do
   end
 
   resources :connections
-
+  resources :posts
+  resources :messages
 
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
@@ -15,4 +16,5 @@ Rails.application.routes.draw do
   post 'signup' => 'users#create'
   get '/auth/facebook/callback' => 'sessions#create'
   delete 'logout' => 'sessions#destroy'
+  post '/users/:id' => 'users#update'
 end

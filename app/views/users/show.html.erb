@@ -1,0 +1,44 @@
+
+<div class="row">
+  <aside class="col-md-4">
+    <section class="user_info">
+        <img src="<%= @user.image %>" style="width: 80px">
+        <h1><%= @user.username %></h1>
+    </section>
+    <section class="stats">
+      <div><%= "Friends (#{@user.friends.count})" %></div>
+      <% if @user.friend_with?(current_user) %>
+        <div><%= link_to "Send #{@user.username} a message", '#' %></div>
+        <div><%= link_to 'Unfriend', '#'%></div>
+      <% elsif @user.not_a_friend?(current_user) %>
+        <div><%= link_to 'Add friend', '#'%></div>
+      <% end %>
+    </section>
+  </aside>
+  <div class="col-md-7">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th class="text-center text-info"><h3>Posts (<%= @user.posts.count %>)</h3></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @user.posts.each do |p| %>
+        <tr>
+          <td></td>
+          <td>
+            <span style="font-size: 0.6em">
+              Posted <%= p.created_at.strftime('%c') %>
+              <% if @user == current_user %>
+              <strong><%= link_to "Edit ", edit_post_path(p)%></strong><strong><%= link_to "Delete", post_path(p), method: :delete%></strong>
+              <% end %>
+            </span>
+            <div><%= p.pcontent %></div>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

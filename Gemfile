@@ -35,6 +35,7 @@ gem 'bcrypt'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'dotenv-rails'
+gem 'will_paginate' #display pages
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 

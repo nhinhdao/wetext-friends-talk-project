@@ -2,21 +2,29 @@
     <div class="alert alert-success"><%= flash[:message] %></div>
 <% end %>
 
-
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-1.5">
-        <img src="<%= @user.image %>" style="width: 80px">
-      </div>
-      <div class="col-sm-9" style="font-size: 1em">
-        <p></p>
-        <strong><div><%= @user.username %></div></strong>
+  <div class="row">
+    <aside class="col-md-4">
+      <section class="user_info">
+          <img src="<%= @user.image %>" style="width: 80px">
+          <h3><%= @user.username %></h3>
+      </section>
+      <section class="stats">
         <div><%= @user.email %></div>
+        <div><strong><%= link_to "Friends (#{@user.friends.count})", users_path %></strong></div>
+        <div><strong><%= link_to "Posts (#{@user.posts.count})", user_path(@user) %></strong></div>
         <div><%= link_to 'Update Profile', edit_user_path(@user) %></div>
-      </div>
-    </div>
-    <hr>
-    <div style="max-width: 80%">
+      </section>
+      <hr>
+      <section class="stats">
+        <%= form_for(@user.posts.build) do |f| %>
+          <label>What is in your mind:</label><br>
+          <%= f.hidden_field :user_id %>
+          <p><%= f.text_area :pcontent %></p>
+          <%= f.submit  class: 'btn btn-primary' %>
+        <% end %>
+      </section>
+    </aside>
+    <div class="col-md-7">
       <table class="table table-striped">
         <thead>
           <tr>
@@ -25,25 +33,23 @@
           </tr>
         </thead>
         <tbody>
-        <% @feeds.each do|f|%>
+        <% @feeds.each do |f| %>
           <tr>
             <td><img src="<%= f.user.image %>" style="width: 50px"></td>
             <td>
-              <span><%= link_to f.user.username, '#'%></span>
-              <span style="font-size: 0.6em"> Posted <%= f.created_at.strftime('%c') %>
+              <span><%= link_to f.user.username, user_path(f.user)%></span>
+              <span style="font-size: 0.6em">
+                Posted <%= f.created_at.strftime('%c') %>
                 <% if f.user == @user %>
-                <strong><%= link_to "Delete", post_path(f), method: :delete%></strong>
+                <strong><%= link_to "Edit ", edit_post_path(f)%></strong><strong><%= link_to "Delete", post_path(f), method: :delete%></strong>
                 <% end %>
               </span>
               <div><%= f.pcontent %></div>
             </td>
           </tr>
         <% end %>
-          <tr>
-            <td></td>
-            <td class="text-center"><%= link_to 'View all feeds', '#', class: "justify-content-center"%></td>
-          </tr>
         </tbody>
       </table>
+      <%= will_paginate @feeds %>
     </div>
   </div>
