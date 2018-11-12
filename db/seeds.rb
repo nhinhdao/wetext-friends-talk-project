@@ -10,7 +10,7 @@ a = User.create(username: "robindao", email: "nhinhdao.vn@gmail.com", image: Fak
 end
 
 
-User.take(5).each do |user|
+User.all.each do |user|
   pcontent = Faker::GameOfThrones.quote
   user.posts.create(pcontent: pcontent)
 end
