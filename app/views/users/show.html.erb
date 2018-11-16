@@ -9,7 +9,7 @@
     </section>
     <hr>
     <section>
-      <div><%= link_to "Friends (#{@user.friends.count})", users_path %></div>
+      <div><%= link_to "Friends (#{@user.friends.count})", friends_path(@user) %></div>
       <% if @user.friend_with?(current_user) %>
         <div><%= link_to 'Unfriend', connection_path(@connection), method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-primary btn-sm'%></div>
       <% elsif @user.not_a_friend?(current_user) %>

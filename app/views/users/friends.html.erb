@@ -1,0 +1,38 @@
+<% if flash[:message] %>
+    <div class="alert alert-success"><%= flash[:message] %></div>
+<% end %>
+
+<div class="row">
+  <aside class="col-md-3">
+    <section>
+      <%= render partial: 'userinfo', locals: {user: @user} %>
+    </section>
+    <hr>
+    <section>
+
+    </section>
+  </aside>
+  <div class="col-md-8">
+    <section>
+      <h3 class="text-info">Friends Page</h3>
+    </section>
+    <hr>
+    <section>
+      <% @user.friends.each do |f| %>
+      <div class="row">
+        <div class="col"><img src="<%= f.image %>" style="width: 40px"></div>
+        <div class="col">unfriend</div>
+      </div>
+    <% end %>
+    </section>
+    <h3 class="text-info">Friends Page</h3>
+    <section>
+      <% User.all.each do |f| %>
+      <div class="row">
+        <div class="col"><img src="<%= f.image %>" style="width: 40px"></div>
+        <div class="col">add friend</div>
+      </div>
+      <% end %>
+    </section>
+  </div>
+</div>

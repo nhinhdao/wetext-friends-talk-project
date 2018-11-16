@@ -17,4 +17,5 @@ Rails.application.routes.draw do
   get '/auth/facebook/callback' => 'sessions#create'
   delete 'logout' => 'sessions#destroy'
   post '/users/:id' => 'users#update'
+  get 'users/:id/friends' => 'users#friends', as: 'friends'
 end

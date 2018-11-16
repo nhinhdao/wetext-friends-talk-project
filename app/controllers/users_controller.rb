@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   def index
     @users = User.all
+
   end
 
   def new
@@ -25,7 +26,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @allmessages = Message.inbox(@user).count + @user.messages.count 
+    @allmessages = Message.inbox(@user).count + @user.messages.count
     @connection = Connection.find_by(user_id: session[:current_user_id], friend_id: @user.id)
   end
 
@@ -45,6 +46,10 @@ class UsersController < ApplicationController
 
   def destroy
     byebug
+  end
+
+  def friends
+    @user = User.find(params[:id])
   end
 
   private
