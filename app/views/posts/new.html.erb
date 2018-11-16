@@ -1,2 +1,14 @@
-<h1>Posts#new</h1>
-<p>Find me in app/views/posts/new.html.erb</p>
+
+<div class="row">
+  <aside class="col-md-4">
+    <section>
+      <%= render partial: 'users/userinfo', locals: {user: @user} %>
+    </section>
+    <hr>
+  </aside>
+  <div class="col-md-5">
+    <h3 class="text-info">What is on your mind</h3>
+    <hr>
+    <%= render partial: 'form', locals: {post: @post}%>
+  </div>
+</div>

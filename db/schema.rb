@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 2018_11_07_233434) do
   end
 
   create_table "messages", force: :cascade do |t|
-    t.text "mcontent"
+    t.text "content"
     t.integer "user_id"
     t.integer "friend_id"
     t.datetime "created_at", null: false
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2018_11_07_233434) do
   end
 
   create_table "posts", force: :cascade do |t|
-    t.text "pcontent"
+    t.text "content"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

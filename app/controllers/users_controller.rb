@@ -13,7 +13,7 @@ class UsersController < ApplicationController
       if @user && @user.save
         @user.update(image: Gravatar.new("#{@user.email}").image_url + "?d=wavatar")
         session[:current_user_id] = @user.id
-        flash[:signup_success] = "Thank you for signing up"
+        flash[:message] = "Thank you for signing up"
         render 'sessions/welcome'
       else
         render 'new'
@@ -25,6 +25,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @allmessages = Message.inbox(@user).count + @user.messages.count 
+    @connection = Connection.find_by(user_id: session[:current_user_id], friend_id: @user.id)
   end
 
   def edit
@@ -42,6 +44,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
+    byebug
   end
 
   private

@@ -4,52 +4,16 @@
 
   <div class="row">
     <aside class="col-md-4">
-      <section class="user_info">
-          <img src="<%= @user.image %>" style="width: 80px">
-          <h3><%= @user.username %></h3>
-      </section>
-      <section class="stats">
-        <div><%= @user.email %></div>
-        <div><strong><%= link_to "Friends (#{@user.friends.count})", users_path %></strong></div>
-        <div><strong><%= link_to "Posts (#{@user.posts.count})", user_path(@user) %></strong></div>
-        <div><%= link_to 'Update Profile', edit_user_path(@user) %></div>
+      <section>
+          <%= render partial: 'users/userinfo', locals: {user: @user}%>
       </section>
       <hr>
-      <section class="stats">
-        <%= form_for(@user.posts.build) do |f| %>
-          <label>What is in your mind:</label><br>
-          <%= f.hidden_field :user_id %>
-          <p><%= f.text_area :pcontent %></p>
-          <%= f.submit  class: 'btn btn-primary' %>
-        <% end %>
+      <section>
+        <h4 class="text-info">What is on your mind</h4>
+        <%= render partial: 'posts/form', locals: {post: @post}%>
       </section>
     </aside>
     <div class="col-md-7">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col"></th>
-            <th class="text-center text-info"><h3>New Feeds</h3></th>
-          </tr>
-        </thead>
-        <tbody>
-        <% @feeds.each do |f| %>
-          <tr>
-            <td><img src="<%= f.user.image %>" style="width: 50px"></td>
-            <td>
-              <span><%= link_to f.user.username, user_path(f.user)%></span>
-              <span style="font-size: 0.6em">
-                Posted <%= f.created_at.strftime('%c') %>
-                <% if f.user == @user %>
-                <strong><%= link_to "Edit ", edit_post_path(f)%></strong><strong><%= link_to "Delete", post_path(f), method: :delete%></strong>
-                <% end %>
-              </span>
-              <div><%= f.pcontent %></div>
-            </td>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
-      <%= will_paginate @feeds %>
+      <%= render partial: 'posts/allfeeds', locals: {feeds: @feeds, user: @user} %>
     </div>
   </div>

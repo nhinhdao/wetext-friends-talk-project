@@ -1,27 +1,67 @@
-<h1>Messages#index</h1>
-<p>Find me in app/views/messages/index.html.erb</p>
 
-
-<div style="max-width: 60%">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">Inbox</th>
-      </tr>
-    </thead>
-    <tbody>
-    <% @messages.each do|m|%>
-      <tr>
-        <td>
-          <img src="<%= m.user.image %>" style="width: 40px">
-          <span><%= link_to m.user.username, '#' %></span>
-          <div><%= m.mcontent %></div>
-        </td>
-      </tr>
-      <% end %>
-      <tr>
-        <td><%= link_to 'View all messages', '#', class: "justify-content-center"%></td>
-      </tr>
-    </tbody>
-  </table>
+<div class="row">
+  <div class="col-sm-1.5">
+    <div><img src="<%= current_user.image %>" style="width: 80px"></div>
+  </div>
+  <div class="col-sm-9">
+    <br>
+    <div><strong><%= link_to current_user.username, user_path(current_user) %></strong></div>
+    <div><%= link_to "Send a message", new_user_message_path(current_user), class: 'badge badge-primary' %></div>
+  </div>
 </div>
+
+<% if flash[:message] %>
+    <div class="alert alert-success"><%= flash[:message] %></div>
+<% end %>
+
+  <div class="row">
+    <aside class="col-md-6">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th class="text-center text-info" colspan="2"><h3>Inbox</h3></th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @inbox.each do |f| %>
+          <tr>
+            <td><img src="<%= f.user.image %>" style="width: 50px"></td>
+            <td>
+              <span><%= link_to f.user.username, user_path(f.user)%></span>
+              <span style="font-size: 0.6em">
+                <strong>Received</strong> <%= f.created_at.strftime('%c') %>
+              </span>
+              <div><%= truncate(f.content) { link_to "more", message_path(f) } %></div>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <%= will_paginate @inbox, renderer: BootstrapPagination::Rails %>
+    </aside>
+    <div class="col-md-6">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th class="text-center text-info" colspan="2"><h3>Sent</h3></th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @messages.each do |f| %>
+          <tr>
+            <td><img src="<%= f.friend.image %>" style="width: 50px"></td>
+            <td>
+              <span><%= link_to f.friend.username, user_path(f.friend)%></span>
+              <span style="font-size: 0.6em">
+                <strong>Sent</strong> <%= f.created_at.strftime('%c') %>
+                <strong><%= link_to "Edit ", edit_message_path(f)%></strong><strong><%= link_to "Delete", message_path(f), method: :delete%></strong>
+              </span>
+              <div><%= truncate(f.content) { link_to "more", message_path(f) } %></div>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <%= will_paginate @messages, renderer: BootstrapPagination::Rails %>
+    </div>
+  </div>

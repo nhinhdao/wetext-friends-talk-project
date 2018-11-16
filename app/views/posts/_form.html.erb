@@ -1,0 +1,17 @@
+
+<%= form_for(post) do |f| %>
+  <% if post.errors.any? %>
+    <div>
+      <h4 class="text-danger">Uh oh, something went wrong.</h4>
+      <ul>
+        <% post.errors.full_messages.each do |message| %>
+          <li class="text-danger"><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <%= f.hidden_field :user_id %>
+  <p><%= f.text_area :content, size: "30x5" %></p>
+  <%= f.submit  class: 'btn btn-primary' %>
+<% end %>

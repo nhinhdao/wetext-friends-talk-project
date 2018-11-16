@@ -1,0 +1,26 @@
+
+<%= form_for([user, message]) do |m| %>
+  <% if message.errors.any? %>
+    <div>
+      <h4 class="text-danger">Uh oh, something went wrong.</h4>
+      <ul>
+        <% message.errors.full_messages.each do |message| %>
+          <li class="text-danger"><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= m.hidden_field :user_id, value: user.id %>
+  <div class="form-row">
+    <div class="form-group col-md-8">
+      <strong class="<%= 'text-danger' if message.errors[:friend_id].any? %>"><label>Receiver: </label></strong>
+      <p><%= m.collection_select :friend_id, user.friends, :id, :username, prompt: true %></p>
+    </div>
+    <div class="form-group col-md-8">
+      <strong class="<%= 'text-danger' if message.errors[:content].any? %>"><label>Content:</label></strong>
+      <p><%= m.text_area :content, size: "30x10" %></p>
+    </div>
+  </div>
+  <%= m.submit  class: 'btn btn-primary' %>
+  <% end %>

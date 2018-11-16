@@ -12,7 +12,7 @@ end
 
 User.all.each do |user|
   pcontent = Faker::GameOfThrones.quote
-  user.posts.create(pcontent: pcontent)
+  user.posts.create(content: pcontent)
 end
 
 
@@ -22,6 +22,6 @@ for fr in friends do
   mcontent2 = Faker::SiliconValley.quote
   Connection.create(user: a, friend: fr)
   Connection.create(user: fr, friend: a)
-  Message.create(mcontent: mcontent1, user: a, friend: fr)
-  Message.create(mcontent: mcontent2, user: fr, friend: a)
+  Message.create(content: mcontent1, user: a, friend: fr)
+  Message.create(content: mcontent2, user: fr, friend: a)
 end

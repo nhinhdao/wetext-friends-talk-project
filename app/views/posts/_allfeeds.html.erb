@@ -1,0 +1,25 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th class="text-center text-info" colspan="2"><h3>New Feeds</h3></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% feeds.each do |f| %>
+      <tr>
+        <td><img src="<%= f.user.image %>" style="width: 50px"></td>
+        <td>
+          <span><%= link_to f.user.username, user_path(f.user)%></span>
+          <span style="font-size: 0.6em">
+            Posted <%= f.created_at.strftime('%c') %>
+            <% if f.user == user %>
+            <strong><%= link_to "Edit ", edit_post_path(f)%></strong><strong><%= link_to "Delete", post_path(f), method: :delete, data: { confirm: "You sure?" }%></strong>
+            <% end %>
+          </span>
+          <div><%= f.content %></div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= will_paginate @feeds, renderer: BootstrapPagination::Rails %>

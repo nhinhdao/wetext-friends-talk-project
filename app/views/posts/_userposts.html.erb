@@ -1,0 +1,22 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th class="text-center text-info"><h3>Posts (<%= user.posts.count %>)</h3></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% user.posts.each do |p| %>
+    <tr>
+      <td>
+        <span style="font-size: 0.6em">
+          Posted <%= p.created_at.strftime('%c') %>
+          <% if user == current_user %>
+          <strong><%= link_to "Edit ", edit_post_path(p)%></strong><strong><%= link_to "Delete", post_path(p), method: :delete%></strong>
+          <% end %>
+        </span>
+        <div><%= p.content %></div>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

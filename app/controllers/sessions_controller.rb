@@ -4,7 +4,8 @@ class SessionsController < ApplicationController
       redirect_to '/login'
     else
       @user = User.find(session[:current_user_id])
-      @feeds = Post.new_feeds.paginate(page: params[:page], per_page: 3)
+      @feeds = Post.paginate(page: params[:page], per_page: 4)
+      @post = @user.posts.build
       render :welcome
     end
   end
@@ -33,6 +34,9 @@ class SessionsController < ApplicationController
       session[:current_user_id] = @user.id
       flash[:message] = "Thank you for checking in, #{@user.username}"
       redirect_to '/'
+    else
+      flash[:notice] = "Hmm, We can't find you. Sorry, please try again!"
+      render :new
     end
   end
 

@@ -1,0 +1,15 @@
+
+<div class="row">
+  <aside class="col-md-4">
+    <section class="user_info">
+      <%= render partial: 'users/userinfo', locals: {user: @user} %>
+    </section>
+    <hr>
+  </aside>
+  <div class="col-md-7">
+    <h3 class="text-info">Edit Post</h3>
+    <section class="stats">
+      <%= render partial: 'form', locals: {post: @post}%>
+    </section>
+  </div>
+</div>
