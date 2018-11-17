@@ -11,7 +11,11 @@ class User < ApplicationRecord
 
   has_secure_password
 
-  scope :other_users, ->(user) { where.not(:id => user.id) }
+  scope :not_current_user, ->(user) { where.not(:id => user.id) }
+
+  def self.other_users(user)
+    not_current_user(user) - user.friends
+  end
 
   def friend_with?(user)
     self != user && self.friends.include?(user)

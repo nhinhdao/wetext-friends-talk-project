@@ -1,0 +1,4 @@
+<%= form_for(connection), method: :delete  do |c|%>
+<%= c.hidden_field :friend_id, value: friend.id %>
+<%= c.submit 'Unfriend', class: "btn btn-primary btn-sm"%>
+<% end %>

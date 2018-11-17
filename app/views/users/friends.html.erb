@@ -9,30 +9,34 @@
     </section>
     <hr>
     <section>
-
+      <% if @user == current_user %>
+        <h4><%= link_to "Add more friends", users_path, class: 'badge badge-primary' %></h4>
+      <% end %>
     </section>
   </aside>
   <div class="col-md-8">
     <section>
-      <h3 class="text-info">Friends Page</h3>
-    </section>
-    <hr>
-    <section>
-      <% @user.friends.each do |f| %>
-      <div class="row">
-        <div class="col"><img src="<%= f.image %>" style="width: 40px"></div>
-        <div class="col">unfriend</div>
-      </div>
-    <% end %>
-    </section>
-    <h3 class="text-info">Friends Page</h3>
-    <section>
-      <% User.all.each do |f| %>
-      <div class="row">
-        <div class="col"><img src="<%= f.image %>" style="width: 40px"></div>
-        <div class="col">add friend</div>
-      </div>
-      <% end %>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th class="text-center text-info" colspan="4"><h3>Friends Page</h3></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @user.friends.each do |f| %>
+            <tr>
+              <td>
+                <img src="<%= f.image %>" style="width: 40px">
+              </td>
+              <td class="align-items-center"><%= link_to f.username, user_path(f)%></td>
+              <% if @user == current_user %>
+                <td><%= link_to "Send a message", new_user_message_path(current_user)%></td>
+                <td><%= link_to 'Unfriend', '/' %></td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </section>
   </div>
 </div>

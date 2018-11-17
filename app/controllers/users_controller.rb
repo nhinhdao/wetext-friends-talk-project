@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   def index
-    @users = User.all
-
+    @user = User.find_by(id: session[:current_user_id])
+    @users = User.other_users(@user).paginate(page: params[:page], per_page: 4)
   end
 
   def new
@@ -49,7 +49,9 @@ class UsersController < ApplicationController
   end
 
   def friends
+    byebug
     @user = User.find(params[:id])
+    @connection = Connection.find_by(user_id: session[:current_user_id], friend_id: @user.id)
   end
 
   private
