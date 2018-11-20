@@ -20,6 +20,7 @@ class PostsController < ApplicationController
       flash[:message] = "Created new post"
       redirect_to '/'
     else
+      flash[:warning] = "Uh oh! Post's content can't be blank!"
       redirect_to '/'
     end
   end
@@ -34,7 +35,7 @@ class PostsController < ApplicationController
     redirect_to '/', alert: "Action denied" if @post.nil?
     if @post.id == session[:post_id] && @post.update(content: params[:post][:content])
       flash[:message] = "Post updated"
-      redirect_to '/'
+      redirect_to user_path(@user)
     else
       flash[:message] = "Action denied"
       render :edit
@@ -45,7 +46,7 @@ class PostsController < ApplicationController
     find_post
     @post.destroy
     flash[:message] = "Post deleted"
-    redirect_to '/'
+    redirect_to request.referer
   end
 
   private
