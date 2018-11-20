@@ -49,9 +49,7 @@ class UsersController < ApplicationController
   end
 
   def friends
-    byebug
     @user = User.find(params[:id])
-    @connection = Connection.find_by(user_id: session[:current_user_id], friend_id: @user.id)
   end
 
   private

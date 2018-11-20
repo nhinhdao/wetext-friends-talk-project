@@ -1,50 +1,22 @@
 <% if flash[:message] %>
     <div class="alert alert-success"><%= flash[:message] %></div>
 <% end %>
-
-<div class="row">
-  <aside class="col-md-4">
-    <section class="user_info">
-        <img src="<%= @user.image %>" style="width: 80px">
-        <h1><%= @user.username %></h1>
-        <div><%= @user.email %></div>
-    </section>
-    <hr>
-    <section class="stats">
-      <div><%= link_to "Friends (#{@user.friends.count})", users_path %></div>
-      <% if @user.friend_with?(current_user) %>
-        <div><%= link_to 'Unfriend', connection_path(@connection), method: :delete, data: { confirm: "You sure?" }, class: 'badge badge-primary'%></div>
-      <% elsif @user.not_a_friend?(current_user) %>
-        <%= render partial: 'connections/form', locals: {friend: @user, connection: Connection.new} %>
-      <% elsif @user == current_user %>
-        <div><%= link_to "Messages (#{Message.inbox(@user).count})", '#'%></div>
-        <div><%= link_to "Create a new post", new_user_post_path(@user) %></div>
-        <div><%= link_to 'Update Profile', edit_user_path(@user) %></div>
+<div class="row align-center">
+  <div class="col-md-10 offset-md-1">
+    <%= render partial: 'messageinfo', locals: {user: @message.user, friend: @message.friend} %>
+    <div><h5>Content</h5></div>
+    <div style="font-size: 0.7em"><%= @message.updated_at.strftime('%c') %></div>
+    <div><%= @message.content %></div>
+    <br>
+    <% if @message.user == current_user%>
+      <div><%= link_to 'Edit', edit_message_path(@message), class: "badge badge-pill badge-secondary"%><%= link_to "Delete", message_path(@message), method: :delete, class: "badge badge-pill badge-secondary"%></div>
+    <% else %>
+      <h5>Reply</h5>
+      <% if flash[:warning] %>
+          <p class="text-danger"><%= flash[:warning] %></p>
       <% end %>
-    </section>
-  </aside>
-  <div class="col-md-7">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th class="text-center text-info"><h3>Posts (<%= @user.posts.count %>)</h3></th>
-        </tr>
-      </thead>
-      <tbody>
-      <% @user.posts.each do |p| %>
-        <tr>
-          <td>
-            <span style="font-size: 0.6em">
-              Posted <%= p.created_at.strftime('%c') %>
-              <% if @user == current_user %>
-              <strong><%= link_to "Edit ", edit_post_path(p)%></strong><strong><%= link_to "Delete", post_path(p), method: :delete%></strong>
-              <% end %>
-            </span>
-            <div><%= p.content %></div>
-          </td>
-        </tr>
-      <% end %>
-      </tbody>
-    </table>
+      <%= render partial: 'form', locals: {user: current_user, friend: @message.user, message: current_user.messages.build} %>
+    <% end %>
+    <%= link_to 'View all messages', user_messages_path(current_user), class: "badge badge-pill badge-info"%>
   </div>
 </div>

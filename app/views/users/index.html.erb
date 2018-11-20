@@ -10,18 +10,24 @@
         <tbody>
           <% @users.each do |f| %>
             <tr>
-              <td><img src="<%= f.image %>" style="width: 50px"></td>
               <td>
+                <img src="<%= f.image %>" style="width: 50px">
+              </td>
+              <td class="text-center">
                 <span><%= link_to f.username, user_path(f)%></span>
+                <div><%= f.email %></div>
               </td>
               <td>
-                <div><%= render partial: 'connections/form', locals: {friend: f, connection: Connection.new} %></div>
+                <div><%= render partial: 'connections/addfriend', locals: {friend: f, connection: current_user.connections.build} %></div>
               </td>
             </tr>
           <% end %>
         </tbody>
       </table>
       <%= will_paginate @users, renderer: BootstrapPagination::Rails %>
+      <div>
+        <%= link_to 'View all friends', friends_path(current_user), class: "badge badge-pill badge-info"%>
+      </div>
     </section>
   </div>
 </div>

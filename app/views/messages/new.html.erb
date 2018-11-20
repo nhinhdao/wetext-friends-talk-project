@@ -1,3 +1,14 @@
-<h3 class="text-info">Send a message</h3>
-<hr>
-<%= render partial: 'form', locals: {user: @user, message: @message}%>
+
+<div class="row align-center">
+  <div class="col-md-10 offset-md-1">
+    <h3 class="text-info">Send a message</h3>
+    <br>
+    <%= render partial: 'messageinfo', locals: {user: current_user, friend: @friend} %>
+    <h5>Content</h5>
+    <% if flash[:warning] %>
+        <p class="text-danger"><%= flash[:warning] %></p>
+    <% end %>
+    <%= render partial: 'form', locals: {user: current_user, friend: @friend, message: Message.new}%>
+    <%= link_to 'Back', request.referer, class: "badge badge-pill badge-info"%>
+  </div>
+</div>

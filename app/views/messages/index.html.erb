@@ -1,17 +1,8 @@
 
-<div class="row">
-  <div class="col-sm-1.5">
-    <div><img src="<%= current_user.image %>" style="width: 80px"></div>
-  </div>
-  <div class="col-sm-9">
-    <br>
-    <div><strong><%= link_to current_user.username, user_path(current_user) %></strong></div>
-    <div><%= link_to "Send a message", new_user_message_path(current_user), class: 'badge badge-primary' %></div>
-  </div>
-</div>
-
 <% if flash[:message] %>
     <div class="alert alert-success"><%= flash[:message] %></div>
+<% elsif flash[:warning] %>
+    <div class="alert alert-danger"><%= flash[:warning] %></div>
 <% end %>
 
   <div class="row">

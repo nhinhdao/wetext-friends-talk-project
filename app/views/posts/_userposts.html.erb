@@ -9,7 +9,7 @@
     <tr>
       <td>
         <span style="font-size: 0.6em">
-          Posted <%= p.created_at.strftime('%c') %>
+          Posted <%= p.updated_at.strftime('%c') %>
           <% if user == current_user %>
           <strong><%= link_to "Edit ", edit_post_path(p)%></strong><strong><%= link_to "Delete", post_path(p), method: :delete%></strong>
           <% end %>

@@ -10,7 +10,7 @@
     <hr>
     <section>
       <% if @user == current_user %>
-        <h4><%= link_to "Add more friends", users_path, class: 'badge badge-primary' %></h4>
+        <h4><%= link_to "Add more friends", users_path, class: 'badge badge-secondary' %></h4>
       <% end %>
     </section>
   </aside>
@@ -23,15 +23,18 @@
           </tr>
         </thead>
         <tbody>
-          <% @user.friends.each do |f| %>
+          <% @user.connections.each do |f| %>
             <tr>
               <td>
-                <img src="<%= f.image %>" style="width: 40px">
+                <img src="<%= f.friend.image %>" style="width: 40px">
               </td>
-              <td class="align-items-center"><%= link_to f.username, user_path(f)%></td>
+              <td class="align-items-center">
+                <%= link_to f.friend.username, user_path(f.friend)%>
+                <div><%= f.friend.email %></div>
+              </td>
               <% if @user == current_user %>
-                <td><%= link_to "Send a message", new_user_message_path(current_user)%></td>
-                <td><%= link_to 'Unfriend', '/' %></td>
+                <td><%= link_to "Send a message", new_user_message_path(f.friend), class: 'btn btn-info btn-sm' %></td>
+                <td><%= link_to 'Unfriend', connection_path(f), method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-primary btn-sm'%></td>
               <% end %>
             </tr>
           <% end %>

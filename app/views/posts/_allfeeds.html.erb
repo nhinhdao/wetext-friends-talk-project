@@ -11,7 +11,7 @@
         <td>
           <span><%= link_to f.user.username, user_path(f.user)%></span>
           <span style="font-size: 0.6em">
-            Posted <%= f.created_at.strftime('%c') %>
+            Posted <%= f.updated_at.strftime('%c') %>
             <% if f.user == user %>
             <strong><%= link_to "Edit ", edit_post_path(f)%></strong><strong><%= link_to "Delete", post_path(f), method: :delete, data: { confirm: "You sure?" }%></strong>
             <% end %>

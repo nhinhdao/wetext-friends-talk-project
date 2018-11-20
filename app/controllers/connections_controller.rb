@@ -3,9 +3,8 @@ class ConnectionsController < ApplicationController
   end
 
   def create
-    @user = User.find_by(id: params[:connection][:friend_id])
-    Connection.create(user_id: session[:current_user_id], friend_id: params[:connection][:friend_id])
-    Connection.create(user_id: params[:connection][:friend_id], friend_id: session[:current_user_id])
+    @connection = Connection.create(connection_params)
+    Connection.create(@connection.get_ids)
     redirect_to request.referer
   end
 
@@ -14,5 +13,11 @@ class ConnectionsController < ApplicationController
     @connection2 = Connection.find_by(@connection1.get_ids)
     Connection.destroy([@connection1.id, @connection2.id])
     redirect_to request.referer
+  end
+
+  private
+
+  def connection_params
+    params.require(:connection).permit(:user_id, :friend_id)
   end
 end

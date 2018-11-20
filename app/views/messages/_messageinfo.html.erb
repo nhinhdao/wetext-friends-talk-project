@@ -1,0 +1,10 @@
+<div><h5>Sender</h5></div>
+<div><img src="<%= user.image %>" style="width: 50px">
+  <span><%= link_to user.username, user_path(user)%></span>
+</div>
+<br>
+<div><h5>Receiver</h5></div>
+<div><img src="<%= friend.image %>" style="width: 50px">
+  <span><%= link_to friend.username, user_path(friend)%></span>
+</div>
+<br>
