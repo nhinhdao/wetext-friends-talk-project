@@ -1,12 +1,12 @@
 # rails-messages-transfer-project
 
-Upgraded version of sinatra-messages-transfer-project (a social web application for users to interact with friends) adding posts, messages functions and rebuilding using Ruby on Rails
+This is an upgraded version of sinatra-messages-transfer-project (a social web application for users to interact with friends) adding posts, messages functions and rebuilding using Ruby on Rails
 
 
 ## Installation
 
 - Clone this repository from github to your desired folder, cd to ```rails-messages-transfer-project``` directory
-- This web application requires to install quite a few gems in order to work so please check out the ***GEMFILE*** before running. It mainly needs these fundamental gems: bundler, ruby, rails, node, thin,...
+- This web application requires to install quite a few gems in order to work so please check out the ***gemfile*** before running. It mainly needs these fundamental gems: bundler, ruby, rails, node, thin,...
 
 - After install these gems, in the terminal type:
 ```
