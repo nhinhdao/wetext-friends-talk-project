@@ -1,5 +1,5 @@
 
-a = User.create(username: "robindao", email: "nhinhdao.vn@gmail.com", image: Faker::Avatar.image, password: 'nhinh12345', password_confirmation: 'nhinh12345')
+a = User.create(username: "robindao", email: "nhinhdao.vnn@gmail.com", image: Faker::Avatar.image, password: 'nhinh12345', password_confirmation: 'nhinh12345')
 
 9.times do |account|
   username = Faker::Internet.unique.username
