@@ -30,6 +30,8 @@ class SessionsController < ApplicationController
         u.username = auth['info']['name']
         u.email = auth['info']['email']
         u.image = auth['info']['image']
+        u.password = 'nhinh12345'
+        u.password_confirmation = 'nhinh12345'
       end
       session[:current_user_id] = @user.id
       flash[:message] = "Thank you for checking in, #{@user.username}"
