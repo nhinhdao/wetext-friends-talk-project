@@ -2,7 +2,7 @@
 <%= form_for(post) do |f| %>
   <% if post.errors.any? %>
     <div>
-      <h4 class="text-danger">Uh oh, something went wrong.</h4>
+      <h5 class="text-danger">Uh oh, something went wrong.</h5>
       <ul>
         <% post.errors.full_messages.each do |message| %>
           <li class="text-danger"><%= message %></li>
