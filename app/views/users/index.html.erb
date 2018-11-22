@@ -24,7 +24,7 @@
           <% end %>
         </tbody>
       </table>
-      <%= will_paginate @users, renderer: BootstrapPagination::Rails %>
+      <%= will_paginate @users, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
       <div>
         <%= link_to 'View all friends', friends_path(current_user), class: "badge badge-pill badge-info"%>
       </div>

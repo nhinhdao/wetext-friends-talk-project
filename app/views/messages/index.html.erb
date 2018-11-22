@@ -28,7 +28,7 @@
         <% end %>
         </tbody>
       </table>
-      <%= will_paginate @inbox, renderer: BootstrapPagination::Rails %>
+      <%= will_paginate @inbox, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
     </aside>
     <div class="col-md-6">
       <table class="table table-striped">
@@ -53,6 +53,6 @@
         <% end %>
         </tbody>
       </table>
-      <%= will_paginate @messages, renderer: BootstrapPagination::Rails %>
+      <%= will_paginate @messages, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
     </div>
   </div>

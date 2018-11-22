@@ -22,4 +22,4 @@
     <% end %>
   </tbody>
 </table>
-<%= will_paginate @feeds, renderer: BootstrapPagination::Rails %>
+<%= will_paginate @feeds, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
