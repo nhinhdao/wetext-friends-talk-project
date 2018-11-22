@@ -15,13 +15,12 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
-    redirect_to '/', message: "Action denied" if @post.user_id != session[:current_user_id]
     if @post && @post.save
       flash[:message] = "Created new post"
       redirect_to '/'
     else
-      flash[:warning] = "Uh oh! Post's content can't be blank!"
-      redirect_to '/'
+      flash[:warning] = "Uh oh! Your post is blank!"
+      redirect_to request.referer
     end
   end
 
