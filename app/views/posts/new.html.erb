@@ -7,7 +7,10 @@
     <hr>
   </aside>
   <div class="col-md-5">
-    <h3 class="text-info">What is on your mind</h3>
+    <h3 class="text-info">What is on your mind:</h3>
+    <% if flash[:warning] %>
+        <div class="text-danger"><%= flash[:warning] %></div>
+    <% end %>
     <hr>
     <%= render partial: 'form', locals: {post: @post, size: '60x8'}%>
   </div>
