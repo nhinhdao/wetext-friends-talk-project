@@ -13,10 +13,22 @@
         <% if flash[:warning] %>
             <p class="text-danger"><%= flash[:warning] %></p>
         <% end %>
-        <%= render partial: 'posts/form', locals: {post: @post, size: '30x6'}%>
+        <%= render partial: 'posts/form', locals: {post: @post, size: '30x10'}%>
       </section>
     </aside>
-    <div class="col-md-7">
+    <div class="col-md-8">
       <%= render partial: 'posts/allfeeds', locals: {feeds: @feeds, user: @user} %>
     </div>
   </div>
+
+  <%# <div class='popupMessage'></div> %>
+
+<script type="text/javascript" charset="utf-8">
+  $(function () {
+    $('form').submit(function(event) {
+      //prevent form from submitting the default way
+      event.preventDefault();
+      alert(flash[:message]);
+    });
+  });
+</script>

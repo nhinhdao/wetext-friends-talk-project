@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
       redirect_to '/login'
     else
       @user = User.find(session[:current_user_id])
-      @feeds = Post.paginate(page: params[:page], per_page: 4)
+      @feeds = Post.paginate(page: params[:page], per_page: 5)
       @post = @user.posts.build
       render :welcome
     end

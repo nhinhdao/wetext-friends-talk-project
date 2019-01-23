@@ -18,3 +18,13 @@ body {
 .container {
   height: 100%;
 }
+
+.popupMessage {
+  text-align: center;
+  color: black;
+  background: rgb(197, 219, 206);
+  width: 300px;
+  padding: 5px 6px 5px 6px;
+  border: 1px dashed gray;
+  font-size: 90%;
+}
