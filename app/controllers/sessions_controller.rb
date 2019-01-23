@@ -6,7 +6,10 @@ class SessionsController < ApplicationController
       @user = User.find(session[:current_user_id])
       @feeds = Post.paginate(page: params[:page], per_page: 5)
       @post = @user.posts.build
-      render :welcome
+      respond_to do |f|
+        f.html { render :welcome }
+        f.json { render json: @author }
+      end
     end
   end
 
