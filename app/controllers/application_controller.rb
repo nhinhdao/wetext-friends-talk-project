@@ -5,4 +5,7 @@ class ApplicationController < ActionController::Base
     !!session[:current_user_id]
   end
 
+  def notfound
+    render 'messages/notfound'
+  end
 end
