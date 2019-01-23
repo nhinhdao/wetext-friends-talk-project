@@ -28,6 +28,10 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @allmessages = Message.inbox(@user).count + @user.messages.count
     @connection = Connection.find_by(user_id: session[:current_user_id], friend_id: @user.id)
+  respond_to do |f|
+    f.html { render :show }
+    f.json { render json: @allmessages }
+  end
   end
 
   def edit
