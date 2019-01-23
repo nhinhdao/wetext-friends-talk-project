@@ -17,3 +17,6 @@
 //= require popper
 //= require bootstrap-sprockets
 //= require_tree .
+//= require posts
+//= require messages
+//= require friends

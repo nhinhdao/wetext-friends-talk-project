@@ -1,48 +1,35 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>The Message Book</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+<head>
+  <title>The Message Book</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%# <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> %>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
 
   <body>
-    <nav class="navbar sticky-top navbar-expand-sm navbar-light" style="background-color: #e3f2fd;">
-      <strong><a class="navbar-brand text-info" href="/">The Message Book</a></strong>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <% if current_user %>
-            <li class="nav-item">
-              <a class="nav-link", href="/">Home</a>
-            </li>
-            <li class="nav-item">
-              <%= link_to "My profile", user_path(current_user), class: "nav-link" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "Messages", user_messages_path(current_user), class: "nav-link" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "Friends", friends_path(current_user), class: "nav-link" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "Log Out", logout_path, method: :delete, class: "nav-link" %>
-            </li>
-          <% else %>
-            <li class="nav-item active">Howdy! It is nice to meet you </li>
-          <% end %>
-        </ul>
+    <nav class="site-header sticky-top py-1" style="background-color: #464849;" >
+      <div class="container d-flex flex-column flex-md-row justify-content-between">
+        <strong><%= link_to "wetext", root_path, class: "py-2 d-none d-md-inline-block" %></strong>
+        <% if current_user %>
+          <%= link_to "My profile", user_path(current_user), class: "py-2 d-none d-md-inline-block" %>
+          <%= link_to "Messages", user_messages_path(current_user), class: "py-2 d-none d-md-inline-block" %>
+          <%= link_to "Friends", friends_path(current_user), class: "py-2 d-none d-md-inline-block" %>
+          <%= link_to "Log Out", logout_path, method: :delete, class: "py-2 d-none d-md-inline-block" %>
+        <% else %>
+          <li>Howdy! It is nice to meet you </li>
+        <% end %>
       </div>
     </nav>
-    <br>
-    <div class="container">
+  
+    <div class="container" style="background: #f3f4f4; max-width: 80%">
       <%= yield %>
     </div>
   </body>
+
 </html>
