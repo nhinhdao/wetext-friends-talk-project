@@ -13,7 +13,7 @@
         <% if flash[:warning] %>
             <p class="text-danger"><%= flash[:warning] %></p>
         <% end %>
-        <%= render partial: 'posts/form', locals: {post: @post, size: '30x10'}%>
+        <%= render partial: 'posts/form', locals: {post: @post, size: '35x8'}%>
       </section>
     </aside>
     <div class="col-md-8">
@@ -27,8 +27,15 @@
   $(function () {
     $('form').submit(function(event) {
       //prevent form from submitting the default way
+      //check the content of the post to send warning or success.
       event.preventDefault();
-      alert(flash[:message]);
+      //TODO: event.preventdefault take control of form field. Rescue it
+      Swal.fire({
+        type: 'success',
+        title: 'Your post has been uploaded',
+        showConfirmButton: false,
+        timer: 1500
+      })
     });
   });
 </script>

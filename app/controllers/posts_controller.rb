@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   def index
-    @posts = Post.all.paginate(page: params[:page], per_page: 6)
+    @posts = Post.all
     @user = User.find(session[:current_user_id])
     # render json: @posts
   end

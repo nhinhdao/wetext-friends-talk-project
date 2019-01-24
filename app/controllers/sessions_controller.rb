@@ -8,9 +8,6 @@ class SessionsController < ApplicationController
       @post = @user.posts.build
       render :welcome
       # render json: @feeds
-      # id: 10,
-      # content: "A passing grade? Like a C? Why don't I just get pregnant at a bus station?",
-      # user_id: 10,
     end
   end
 

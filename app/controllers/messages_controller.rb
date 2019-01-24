@@ -1,18 +1,24 @@
 class MessagesController < ApplicationController
   def index
-    if params[:user_id]
-      @user = User.find(params[:user_id])
-      @messages = @user.messages.paginate(page: params[:page], per_page: 5)
-      @inbox = Message.inbox(@user).paginate(page: params[:page], per_page: 5)
+    @user = User.find(params[:user_id])
+    @messages = Message.inbox(@user)
+    @uniq_users = Message.uniq_users(@messages)
+  end
+  
+  def all_messages
+    if params[:id] && params[:fid]
+      ids = [params[:id].to_i, params[:fid].to_i]
+      @messages = Message.pair_messages(ids)
+      render json: @messages
     else
-      @messages = Message.all
+      render 'messages/notfound'
     end
   end
-
+  
   def new
     @friend = User.find(params[:user_id])
   end
-
+  
   def create
     @message = Message.new(message_params)
     if @message && @message.save
@@ -23,11 +29,11 @@ class MessagesController < ApplicationController
       redirect_to request.referer
     end
   end
-
+  
   def edit
     find_message
   end
-
+  
   def update
     @message = Message.find(params[:id])
     @message.content = params[:message][:content]
@@ -39,11 +45,11 @@ class MessagesController < ApplicationController
       redirect_to request.referer
     end
   end
-
+  
   def show
     @message = Message.find(params[:id])
   end
-
+  
   def destroy
     find_message
     if @message
@@ -54,13 +60,13 @@ class MessagesController < ApplicationController
     end
     redirect_to user_messages_path(@user)
   end
-
+  
   private
-
+  
   def message_params
     params.require(:message).permit(:user_id, :friend_id, :content)
   end
-
+  
   def find_message
     @user = User.find_by(id: session[:current_user_id])
     @message = @user.messages.find(params[:id])

@@ -16,10 +16,10 @@
             <strong><%= link_to "Edit ", edit_post_path(f)%></strong><strong><%= link_to "Delete", post_path(f), method: :delete, data: { confirm: "You sure?" }%></strong>
             <% end %>
           </span>
-          <div><%= f.content %></div>
+          <div><%= f.content %></div>        
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-<%= will_paginate @feeds, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+ <%#= will_paginate @feeds, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>

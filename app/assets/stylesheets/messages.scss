@@ -1,3 +1,81 @@
 // Place all the styles related to the Messages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+* {
+  box-sizing: border-box
+}
+
+body {
+  font-family: "Lato", sans-serif;
+}
+
+/* Style the buttons inside the tab */
+.tab div {
+  display: block;
+  background-color: inherit;
+  color: black;
+  padding: 22px 16px;
+  width: 100%;
+  border: none;
+  outline: none;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+td.choice:hover {
+  background-color: rgb(201, 224, 219);
+}
+
+/* Create an active/current "tab button" class */
+td.choice.active {
+  background-color: #ccc;
+}
+
+.message {
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.darker {
+  border: 2px solid #dedede;
+  background-color: #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.popup::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.popup img {
+  float: left;
+  max-width: 60px;
+  width: 100%;
+  margin-right: 20px;
+  border-radius: 50%;
+}
+
+.popup img.right {
+  float: right;
+  margin-left: 20px;
+  margin-right: 0;
+}
+
+.time-right {
+  float: right;
+  color: #aaa;
+}
+
+.time-left {
+  float: left;
+  color: #999;
+}

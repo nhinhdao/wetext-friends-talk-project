@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   resources :connections, only: [:create, :destroy]
   resources :posts
-  resources :messages, only: [:show, :edit, :update, :destroy]
+  resources :messages
 
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
@@ -18,5 +18,6 @@ Rails.application.routes.draw do
   delete 'logout' => 'sessions#destroy'
   post '/users/:id' => 'users#update'
   get 'users/:id/friends' => 'users#friends', as: 'friends'
-  get '*unmatched_route', to: 'application#notfound'
+  get '/users/:id/messages/:fid' => 'messages#all_messages'
+  get '*unmatched_route', to: 'messages#notfound'
 end

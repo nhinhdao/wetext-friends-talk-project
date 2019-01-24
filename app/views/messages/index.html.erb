@@ -5,54 +5,63 @@
     <div class="alert alert-danger"><%= flash[:warning] %></div>
 <% end %>
 
-  <div class="row">
-    <aside class="col-md-6">
-      <table class="table table-striped">
-        <thead>
+<h1>Messages</h1>
+<hr>
+<%# add  id="defaultOpen" to open a chat by default %>
+
+<%# left pane: display avatar and email of a friend %>
+<div class="row">
+  <div class="col-md-1">
+    <table class="table table-striped">
+      <thead></thead>
+      <tbody>
+          <% @uniq_users.each do |user|  %>
           <tr>
-            <th class="text-center text-info" colspan="2"><h3>Inbox</h3></th>
-          </tr>
-        </thead>
-        <tbody>
-        <% @inbox.each do |f| %>
-          <tr>
-            <td><img src="<%= f.user.image %>" style="width: 50px"></td>
-            <td>
-              <span><%= link_to f.user.username, user_path(f.user)%></span>
-              <span style="font-size: 0.6em">
-                <strong>Received</strong> <%= f.created_at.strftime('%c') %>
-              </span>
-              <div><%= truncate(f.content) { link_to "more", message_path(f) } %></div>
-            </td>
+            <td class="choice text-center" onclick="openMessage(this)" data-friend="<%= user.id %>" data-user="<%= session[:current_user_id] %>"><img src="<%= user.image %>" style="width: 50px">
+            <%# binding.pry; %>
+            <%= user.username  %></td>
           </tr>
         <% end %>
-        </tbody>
-      </table>
-      <%= will_paginate @inbox, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
-    </aside>
-    <div class="col-md-6">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th class="text-center text-info" colspan="2"><h3>Sent</h3></th>
-          </tr>
-        </thead>
-        <tbody>
-        <% @messages.each do |f| %>
-          <tr>
-            <td><img src="<%= f.friend.image %>" style="width: 50px"></td>
-            <td>
-              <span><%= link_to f.friend.username, user_path(f.friend)%></span>
-              <span style="font-size: 0.6em">
-                <strong>Sent</strong> <%= f.created_at.strftime('%c') %>
-                <strong><%= link_to "Edit ", edit_message_path(f)%></strong><strong><%= link_to "Delete", message_path(f), method: :delete%></strong>
-              </span>
-              <div><%= truncate(f.content) { link_to "more", message_path(f) } %></div>
-            </td>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
-      <%= will_paginate @messages, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-sm-1"></div>
+  <%# right pane: display chats between the selected friend and current_user %>
+  <div class="col-md-9">
+      <div class="row popup message">
+        <img src="" alt="Avatar" style="width:50px;">
+        <p class='received'></p>
+        <span class="time-left"></span>
+      </div>
+
+      <div class="row popup darker">
+        <img src="" alt="Avatar" class="right" style="width:50px;">
+        <p class="sent time-right"></p>
+        <span class="time-right"></span>
     </div>
   </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+function openMessage(td) {
+  let user_id = parseInt(td.dataset.user);
+  let friend_id = parseInt(td.dataset.friend);
+  let ids = [user_id, friend_id];
+  $.get('users/'+${user_id}+'/messages/'+${friend_id}, function (message) {
+    debugger;
+    var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(cityName).style.display = "block";
+      evt.currentTarget.className += " active";
+    })
+  }
+// Get the element with id="defaultOpen" and click on it
+// document.getElementById("defaultOpen").click();
+</script>
