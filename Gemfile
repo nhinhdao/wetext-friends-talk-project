@@ -44,6 +44,7 @@ gem 'will_paginate-bootstrap4'
 # gem 'mini_magick', '~> 4.8'
 
 
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 

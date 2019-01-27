@@ -1,7 +1,7 @@
 
 <%= form_for(message) do |m| %>
-  <%= m.hidden_field :user_id, value: user.id %>
-  <%= m.hidden_field :friend_id, value: friend.id %>
+  <%= m.hidden_field :user_id, value: userid %>
+  <%= m.hidden_field :friend_id, value: friendid %>
   <p><%= m.text_area :content, size: "100x3"  %></p>
   <%= m.submit 'Send',  class: 'btn btn-primary btn-sm' %>
   <% end %>

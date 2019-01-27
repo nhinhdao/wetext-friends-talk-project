@@ -1,13 +1,9 @@
-
-<% if flash[:message] %>
-    <div class="alert alert-success"><%= flash[:message] %></div>
-<% elsif flash[:warning] %>
+<% if flash[:warning] %>
     <div class="alert alert-danger"><%= flash[:warning] %></div>
 <% end %>
 
-<h1>Messages</h1>
+<h1 class="text-center text-info">Messages</h1>
 <hr>
-<%# add  id="defaultOpen" to open a chat by default %>
 
 <%# left pane: display avatar and email of a friend %>
 <div class="row">
@@ -15,11 +11,16 @@
     <table class="table table-striped">
       <thead></thead>
       <tbody>
-          <% @uniq_users.each do |user|  %>
+          <% @uniq_users.each_with_index do |user, index|  %>
+          <div ></div>
           <tr>
-            <td class="choice text-center" onclick="openMessage(this)" data-friend="<%= user.id %>" data-user="<%= session[:current_user_id] %>"><img src="<%= user.image %>" style="width: 50px">
-            <%# binding.pry; %>
+            <% if index == 0 %>
+            <td class="choice text-center" id="defaultOpen" onclick="openMessage(this)" data-friend="<%= user.id %>" data-user="<%= session[:current_user_id] %>"><img src="<%= user.image %>" style="width: 50px">
             <%= user.username  %></td>
+            <% else %>
+            <td class="choice text-center" onclick="openMessage(this)" data-friend="<%= user.id %>" data-user="<%= session[:current_user_id] %>"><img src="<%= user.image %>" style="width: 50px">
+            <%= user.username  %></td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>
@@ -28,40 +29,57 @@
   <div class="col-sm-1"></div>
   <%# right pane: display chats between the selected friend and current_user %>
   <div class="col-md-9">
-      <div class="row popup message">
-        <img src="" alt="Avatar" style="width:50px;">
-        <p class='received'></p>
-        <span class="time-left"></span>
-      </div>
-
-      <div class="row popup darker">
-        <img src="" alt="Avatar" class="right" style="width:50px;">
-        <p class="sent time-right"></p>
-        <span class="time-right"></span>
+    <div class='messagedivs'></div>
+    <div class='formdiv'>
+      <%= form_for(Message.new) do |m| %>
+      <%= m.hidden_field :user_id, value: current_user.id %>
+      <%= m.hidden_field :friend_id, value: 1 %>
+      <p><%= m.text_area :content, size: "100x3"  %></p>
+      <%= m.submit 'Send',  class: 'btn btn-primary btn-sm sendbutton' %>
+      <% end %>
     </div>
   </div>
 </div>
 
 <script type="text/javascript" charset="utf-8">
 function openMessage(td) {
+  // $(td).removeClass('active');
+  // $(td).addClass('active');
   let user_id = parseInt(td.dataset.user);
   let friend_id = parseInt(td.dataset.friend);
   let ids = [user_id, friend_id];
-  $.get('users/'+${user_id}+'/messages/'+${friend_id}, function (message) {
-    debugger;
-    var i, tabcontent, tablinks;
-      tabcontent = document.getElementsByClassName("tabcontent");
-      for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-      }
-      tablinks = document.getElementsByClassName("tablinks");
-      for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-      }
-      document.getElementById(cityName).style.display = "block";
-      evt.currentTarget.className += " active";
-    })
-  }
-// Get the element with id="defaultOpen" and click on it
-// document.getElementById("defaultOpen").click();
+  let url = '/users/'+ user_id +'/messages/'+ friend_id;
+  $.get(url, function (message) {
+    let $div = $('<div/>');
+    for (let i = 0; i < message.length; i++) {
+    let divs_messages = document.getElementsByClassName("messagedivs");
+    let html = '<div class="row popup message"><p><strong>' + message[i].user.username +'</strong>: ' + message[i].content + '</p>' +
+    '<p class="msgtime" style="font-size: 10px">' + message[i].posted_at + '</p></div>';
+    $div.append(html);
+    $('div.messagedivs').html($div);
+    }
+  })
+  $('#message_friend_id').val(friend_id);
+}
+// choose the first td to open by default
+document.getElementById("defaultOpen").click();
+</script>
+
+<script type="text/javascript" charset="utf-8">
+  $(function () {
+  $('form#new_message').submit(function (event) {
+  //prevent form from submitting the default way
+  event.preventDefault();
+  //TODO: event.preventdefault take control of form field. Rescue it
+  var values = $(this).serialize();
+  var posting = $.post('/messages', values);
+  posting.done(function(data) {
+      // TODO: handle response
+    let html = '<div class="row popup message"><p><strong>' + data.user.username +'</strong>: ' + data.content + '</p>' +
+    '<p class="msgtime" style="font-size: 10px">' + data.posted_at + '</p></div>';
+    $('div.messagedivs').append(html);
+    // debugger;
+  });
+  })
+  })
 </script>

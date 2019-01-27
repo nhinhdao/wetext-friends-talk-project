@@ -1,14 +1,39 @@
 
 <div class="row align-center">
   <div class="col-md-10 offset-md-1">
-    <h3 class="text-info">Send a message</h3>
-    <br>
+    <h3 class="new text-info">Send a message</h3>
+    <hr>
     <%= render partial: 'messageinfo', locals: {user: current_user, friend: @friend} %>
     <h5>Content</h5>
     <% if flash[:warning] %>
         <p class="text-danger"><%= flash[:warning] %></p>
     <% end %>
-    <%= render partial: 'form', locals: {user: current_user, friend: @friend, message: Message.new}%>
-    <%= link_to 'Back', request.referer, class: "badge badge-pill badge-info"%>
+    <div class="newmessage">
+      <%= render partial: 'form', locals: {userid: current_user.id, friendid: @friend.id, message: Message.new}%>
+    </div>
+    <br>
+    <%= link_to 'View All Messages', user_messages_path(current_user), class: "badge badge-pill badge-info"%>
   </div>
 </div>
+
+<script type="text/javascript" charset="utf-8">
+  $(function () {
+    $('form#new_message').submit(function (event) {
+    //prevent form from submitting the default way
+    event.preventDefault();
+    var values = $(this).serialize();
+    var posting = $.post('/messages', values);
+    posting.done(function(data) {
+      let html = '<div style="font-size: 0.7em">' + data.posted_at +'</div><div>' + data.content + '</div>';
+      $('div.newmessage').html(html);
+      $('.new.text-info').html("Message");
+      Swal.fire({
+        type: 'success',
+        title: "Message was sent to " + data.friend.username,
+        showConfirmButton: false,
+        timer: 1200
+      })
+    });
+    })
+  })
+</script>

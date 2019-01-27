@@ -15,9 +15,9 @@ class PostsController < ApplicationController
   end
 
   def create
+    binding.pry
     @post = Post.new(post_params)
     if @post && @post.save
-      flash[:message] = "Created new post"
       redirect_to '/'
     else
       flash[:warning] = "Uh oh! Your post is blank!"
@@ -44,6 +44,7 @@ class PostsController < ApplicationController
 
   def destroy
     find_post
+    # binding.pry
     @post.destroy
     flash[:message] = "Post deleted"
     redirect_to request.referer

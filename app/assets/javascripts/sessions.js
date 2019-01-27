@@ -3,7 +3,7 @@ $(function () {
   allEventsListener();
 })
 
-function openMessage() {
+function displayMessage() {
   document.getElementById("popupMessage").innerHTML = message; 
   $.get('/all_messages', function (message) {
     debugger;
@@ -20,4 +20,12 @@ function openMessage() {
         }
       }
   })
+}
+
+function allEventsListener() {
+  // $('button#save').on('click', saveGame);
+  // $('button#previous').on('click', previousGame);
+  // $('button#clear').on('click', clearGame);
+  
+        
 }

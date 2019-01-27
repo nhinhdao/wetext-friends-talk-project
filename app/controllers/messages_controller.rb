@@ -2,7 +2,7 @@ class MessagesController < ApplicationController
   def index
     @user = User.find(params[:user_id])
     @messages = Message.inbox(@user)
-    @uniq_users = Message.uniq_users(@messages)
+    @uniq_users = Message.uniq_users(@messages).delete_if {|user| user == @user}
   end
   
   def all_messages
@@ -22,8 +22,7 @@ class MessagesController < ApplicationController
   def create
     @message = Message.new(message_params)
     if @message && @message.save
-      flash[:message] = "Message was sent to #{@message.friend.username}"
-      redirect_to message_path(@message)
+      render json: @message, status: 201
     else
       flash[:warning] = "Uh oh! Message's content can't be blank!"
       redirect_to request.referer

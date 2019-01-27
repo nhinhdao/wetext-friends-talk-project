@@ -3,7 +3,7 @@
 <% end %>
 
   <div class="row">
-    <aside class="col-md-4">
+    <aside class="col-md-3">
       <section>
           <%= render partial: 'users/userinfo', locals: {user: @user}%>
       </section>
@@ -16,6 +16,7 @@
         <%= render partial: 'posts/form', locals: {post: @post, size: '35x8'}%>
       </section>
     </aside>
+    <div class="col-md-1"></div>
     <div class="col-md-8">
       <%= render partial: 'posts/allfeeds', locals: {feeds: @feeds, user: @user} %>
     </div>
@@ -25,17 +26,13 @@
 
 <script type="text/javascript" charset="utf-8">
   $(function () {
-    $('form').submit(function(event) {
-      //prevent form from submitting the default way
-      //check the content of the post to send warning or success.
-      event.preventDefault();
-      //TODO: event.preventdefault take control of form field. Rescue it
-      Swal.fire({
-        type: 'success',
-        title: 'Your post has been uploaded',
-        showConfirmButton: false,
-        timer: 1500
-      })
+    $('.newpost').click(function() {
+        Swal.fire({
+          type: 'success',
+          title: "Your post has been updated",
+          showConfirmButton: false,
+          timer: 1200
+        })
     });
   });
 </script>
