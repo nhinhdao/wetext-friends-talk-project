@@ -1,8 +1,9 @@
 $(document).on('turbolinks:load', function () {
-  document.getElementById("defaultOpen").click();
-  
   // load each sender messages without refreshing page
   $('td.choice.text-center').on('click', openMessages)
+
+  //set open first message by default
+  $('#defaultOpen').click();
 
   // prevent redirecting after creating a new message
   $('form#new_message').submit(function (event) {
@@ -18,7 +19,65 @@ $(document).on('turbolinks:load', function () {
       $('div.messagedivs').append(html);
       // debugger;
     });
-  })
+  });
+
+  //Handle new post on home page
+  $('form#new_post').submit(function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    let values = $(this).serialize();
+    var template = Handlebars.compile(document.getElementById("post-template").innerHTML)
+    var posting = $.post('/posts', values);
+    posting.done(function (data) {
+      let post = new Post(data);
+      let result = template(post);
+      $(".homepage_feeds").prepend(result);
+      Swal.fire({
+        type: 'success',
+        title: "Your post has been uploaded",
+        showConfirmButton: false,
+        timer: 1200
+      })
+    })
+  });
+
+  //Handle post delete request 
+  $('a.delete_post').click(function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    debugger;
+    let path = this;
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "This can't be reverted!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      debugger;
+      if (result.value) {
+        $.ajax({
+          url: path.href,
+          type: "DELETE",
+          dataType: 'json',
+          success: function (data) {
+            console.log(data);
+            debugger;
+           }
+          })
+          Swal.fire(
+            'Deleted!',
+            'Your post has been deleted.',
+            'success'
+          )
+      }
+      else {
+        Swal.fire("Cancelled", "Your post is safe!", "error");
+      }
+    })
+  });
 })
 
 function Message(message_hash) {
@@ -29,33 +88,12 @@ function Message(message_hash) {
   this.posted_at = message_hash["posted_at"];
 }
 
-function displayMessage() {
-  document.getElementById("popupMessage").innerHTML = message;
-  $.get('/all_messages', function (message) {
-    debugger;
-    var list = $('div#games').text()
-    for (var i = 0; i < games.data.length; i++) {
-      let date = new Date(games.data[i].attributes['updated-at']);
-      let update = date.toUTCString();
-      let id = games.data[i].id;
-      if (!list.includes(id)) {
-        var html = '<button data-id="' + id + '">Game: ' + id + ' - Updated at: ' + update + '</button><br>';
-        $('div#games').append(html);
-        turn = turn_count();
-        $(`button[data-id=${id}]`).on('click', showBoard)
-      }
-    }
-  })
-}
-
 function openMessages() {
-  alert("JO")
-  debugger;
-  // $(td).removeClass('active');
-  // $(td).addClass('active');
-  let user_id = parseInt(td.dataset.user);
-  let friend_id = parseInt(td.dataset.friend);
-  let ids = [user_id, friend_id];
+  // debugger;
+  $(this).removeClass('active');
+  $(this).addClass('active');
+  let user_id = parseInt(this.dataset.user);
+  let friend_id = parseInt(this.dataset.friend);
   let url = '/users/' + user_id + '/messages/' + friend_id;
   $.get(url, function (message) {
     let $div = $('<div/>');
@@ -69,3 +107,4 @@ function openMessages() {
   })
   $('#message_friend_id').val(friend_id);
 }
+

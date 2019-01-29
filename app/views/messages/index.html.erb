@@ -15,10 +15,10 @@
           <div ></div>
           <tr>
             <% if index == 0 %>
-            <td class="choice text-center" id="defaultOpen" onclick="openMessage(this)" data-friend="<%= user.id %>" data-user="<%= session[:current_user_id] %>"><img src="<%= user.image %>" style="width: 50px">
+            <td class="choice text-center" id="defaultOpen" data-friend="<%= user.id %>" data-user="<%= session[:current_user_id] %>"><img src="<%= user.image %>" style="width: 50px">
             <%= user.username  %></td>
             <% else %>
-            <td class="choice text-center" onclick="openMessage(this)" data-friend="<%= user.id %>" data-user="<%= session[:current_user_id] %>"><img src="<%= user.image %>" style="width: 50px">
+            <td class="choice text-center" data-friend="<%= user.id %>" data-user="<%= session[:current_user_id] %>"><img src="<%= user.image %>" style="width: 50px">
             <%= user.username  %></td>
             <% end %>
           </tr>
@@ -40,46 +40,3 @@
     </div>
   </div>
 </div>
-
-<script type="text/javascript" charset="utf-8">
-function openMessage(td) {
-  // $(td).removeClass('active');
-  // $(td).addClass('active');
-  let user_id = parseInt(td.dataset.user);
-  let friend_id = parseInt(td.dataset.friend);
-  let ids = [user_id, friend_id];
-  let url = '/users/'+ user_id +'/messages/'+ friend_id;
-  $.get(url, function (message) {
-    let $div = $('<div/>');
-    for (let i = 0; i < message.length; i++) {
-    let divs_messages = document.getElementsByClassName("messagedivs");
-    let html = '<div class="row popup message"><p><strong>' + message[i].user.username +'</strong>: ' + message[i].content + '</p>' +
-    '<p class="msgtime" style="font-size: 10px">' + message[i].posted_at + '</p></div>';
-    $div.append(html);
-    $('div.messagedivs').html($div);
-    }
-  })
-  $('#message_friend_id').val(friend_id);
-}
-// choose the first td to open by default
-document.getElementById("defaultOpen").click();
-</script>
-
-<script type="text/javascript" charset="utf-8">
-  $(function () {
-  $('form#new_message').submit(function (event) {
-  //prevent form from submitting the default way
-  event.preventDefault();
-  //TODO: event.preventdefault take control of form field. Rescue it
-  var values = $(this).serialize();
-  var posting = $.post('/messages', values);
-  posting.done(function(data) {
-      // TODO: handle response
-    let html = '<div class="row popup message"><p><strong>' + data.user.username +'</strong>: ' + data.content + '</p>' +
-    '<p class="msgtime" style="font-size: 10px">' + data.posted_at + '</p></div>';
-    $('div.messagedivs').append(html);
-    // debugger;
-  });
-  })
-  })
-</script>

@@ -10,6 +10,7 @@
       <hr>
       <section>
         <h4 class="text-info">What is on your mind:</h4>
+        <p class="post_error"></p>
         <% if flash[:warning] %>
             <p class="text-danger"><%= flash[:warning] %></p>
         <% end %>
@@ -21,8 +22,3 @@
       <%= render partial: 'posts/allfeeds', locals: {feeds: @feeds, user: @user} %>
     </div>
   </div>
-
-  <%# <div class='popupMessage'></div> %>
-
-<script type="text/javascript" charset="utf-8">
-</script>

@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  skip_before_action :verify_authenticity_token
   def index
     @posts = Post.all
     @user = User.find(session[:current_user_id])
@@ -17,7 +18,7 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     if @post && @post.save
-      redirect_to '/'
+      render json: @post, status: 201
     else
       flash[:warning] = "Uh oh! Your post is blank!"
       redirect_to request.referer
@@ -43,10 +44,9 @@ class PostsController < ApplicationController
 
   def destroy
     find_post
-    # binding.pry
     @post.destroy
     flash[:message] = "Post deleted"
-    redirect_to request.referer
+    redirect_to '/'
   end
 
   private

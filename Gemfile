@@ -43,7 +43,8 @@ gem 'will_paginate-bootstrap4'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
-
+#handlebars template
+gem 'handlebars_assets'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false

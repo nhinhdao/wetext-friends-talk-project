@@ -4,7 +4,7 @@
       <th class="text-center text-info" colspan="2"><h3>New Feeds</h3></th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="homepage_feeds">
     <% feeds.each do |f| %>
       <tr>
         <td><img src="<%= f.user.image %>" style="width: 50px"></td>
@@ -13,7 +13,8 @@
           <span style="font-size: 0.6em">
             Posted <%= f.updated_at.strftime('%c') %>
             <% if f.user == user %>
-            <strong><%= link_to "Edit ", edit_post_path(f)%></strong><strong><%= link_to "Delete", post_path(f), method: :delete, data: { confirm: "You sure?" }%></strong>
+            <strong>| <%= link_to "Edit ", edit_post_path(f)%> |</strong>
+            <strong><%= link_to "Delete", post_path(f), method: :delete, class: 'delete_post'%></strong>
             <% end %>
           </span>
           <div><%= f.content %></div>        
@@ -24,3 +25,18 @@
 </table>
 
 <%= will_paginate @feeds, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %> 
+
+<script id="post-template" type="text/x-handlebars-template">
+  <tr>
+    <td><img src="{{userimg}}" style="width: 50px"></td>
+    <td>
+      <span><a href="/users/{{userid}}">{{username}}</a></span>
+      <span style="font-size: 0.6em">
+        Posted {{posted_at}} | 
+        <strong><a href="/posts/{{id}}/edit">Edit</a></strong> | 
+        <strong><a href="/posts/{{id}}" class="delete_post" rel="nofollow" data-method="delete">Delete</a></strong>
+      </span>
+      <div>{{content}}</div>        
+    </td>
+  </tr>
+</script>

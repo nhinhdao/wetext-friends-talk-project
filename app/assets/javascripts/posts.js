@@ -1,7 +1,10 @@
-function Post(id, content, userid) {
-  this.id = id;
-  this.content = content;
-  this.userid = userid;
+function Post(post_hash) {
+  this.id = post_hash['id'];
+  this.content = post_hash['content'];
+  this.userid = post_hash['user']['id'];
+  this.username = post_hash['user']['username'];
+  this.userimg = post_hash['user']['image'];
+  this.posted_at = post_hash['posted_at'];
 }
 
 Post.prototype.shortenContent = function () {
@@ -12,17 +15,3 @@ Post.prototype.shortenContent = function () {
     return this.content;
   }
 }
-
-$(document).on('turbolinks:load', function () {
-  $('form.newpost').submit(function (event) {
-    event.preventDefault();
-    alert("jo jo");
-    debugger;
-    Swal.fire({
-      type: 'success',
-      title: "Your post has been updated",
-      showConfirmButton: false,
-      timer: 1200
-    })
-  });
-});
