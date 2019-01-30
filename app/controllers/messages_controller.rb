@@ -1,7 +1,7 @@
 class MessagesController < ApplicationController
   def index
     @user = User.find(params[:user_id])
-    @messages = Message.inbox(@user)
+    @messages = Message.allmsgs(@user)
     @uniq_users = Message.uniq_users(@messages).delete_if {|user| user == @user}
   end
   

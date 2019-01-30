@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root 'sessions#welcome'
 
   resources :users, shallow: true do
-    resources :posts
+    resources :posts, except: [:new]
     resources :messages
   end
 

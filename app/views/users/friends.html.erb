@@ -24,17 +24,17 @@
         </thead>
         <tbody>
           <% @user.connections.each do |f| %>
-            <tr>
+            <tr class="align-items-center">
               <td>
                 <img src="<%= f.friend.image %>" style="width: 40px">
               </td>
-              <td class="align-items-center">
+              <td>
                 <%= link_to f.friend.username, user_path(f.friend)%>
                 <div><%= f.friend.email %></div>
               </td>
               <% if @user == current_user %>
-                <td><%= link_to "Send a message", new_user_message_path(f.friend), class: 'btn btn-info btn-sm' %></td>
-                <td><%= link_to 'Unfriend', connection_path(f), method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-primary btn-sm'%></td>
+                <td><%= link_to "Send a message", new_user_message_path(f.friend), class: 'badge badge-pill badge-info' %></td>
+                <td><%= link_to 'Unfriend', connection_path(f), method: :delete, class: 'badge badge-pill badge-secondary unfriend'%></td>
               <% end %>
             </tr>
           <% end %>

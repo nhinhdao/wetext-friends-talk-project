@@ -15,6 +15,10 @@
     </aside>
     <div class="col-md-1"></div>
     <div class="col-md-8">
-      <%= render partial: 'posts/allfeeds', locals: {feeds: @feeds, user: @user} %>
+      <br>
+      <h3 class="text-center text-info"  colspan="2">New Feeds</h3>
+      <hr>
+      <%= render partial: 'posts/posts', locals: {feeds: @feeds, user: @user} %>
+      <%= will_paginate @feeds, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
     </div>
   </div>

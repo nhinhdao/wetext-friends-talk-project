@@ -1,4 +1,7 @@
 class ConnectionsController < ApplicationController
+
+  skip_before_action :verify_authenticity_token
+  
   def new
   end
 
@@ -9,6 +12,7 @@ class ConnectionsController < ApplicationController
   end
 
   def destroy
+    binding.pry
     @connection1 = Connection.find_by(id: params[:id])
     @connection2 = Connection.find_by(@connection1.get_ids)
     Connection.destroy([@connection1.id, @connection2.id])

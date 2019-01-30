@@ -5,9 +5,14 @@ class Message < ApplicationRecord
   validates :content, presence: true
   validates :friend_id, presence: true
 
-  def self.inbox(user)
+  def self.allmsgs(user)
     Message.all.select{|msg| msg.user == user || msg.friend == user}
   end
+
+  def self.inbox(user)
+    Message.all.select{|msg| msg.friend == user}
+  end
+
 
   def self.uniq_users(message)
     user = message.map{|msg| msg.user}

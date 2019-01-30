@@ -17,12 +17,14 @@
         <%= render partial: 'connections/addfriend', locals: {friend: @user, connection: current_user.connections.build} %>
       <% elsif @user == current_user %>
         <div><strong><%= link_to "Messages (#{@allmessages})", user_messages_path(@user)%></strong></div>
-        <div><strong><%= link_to "Create a new post", new_user_post_path(@user), class: 'btn btn-secondary btn-sm' %></strong></div>
         <div><strong><%= link_to 'Update Profile', edit_user_path(@user), class: 'btn btn-info btn-sm' %></strong></div>
       <% end %>
     </section>
   </aside>
   <div class="col-md-8">
-    <%= render partial: 'posts/userposts', locals: {user: @user} %>
+    <br>
+    <h3 class="text-center text-info"  colspan="2">Posts</h3>
+    <hr>
+    <%= render partial: 'posts/posts', locals: {feeds: @user.posts, user: @user} %>
   </div>
 </div>

@@ -1,6 +1,7 @@
 
 <div class="row align-center">
   <div class="col-md-10 offset-md-1">
+    <br>
     <h3 class="new text-info">Send a message</h3>
     <hr>
     <%= render partial: 'messageinfo', locals: {user: current_user, friend: @friend} %>
@@ -15,25 +16,3 @@
     <%= link_to 'View All Messages', user_messages_path(current_user), class: "badge badge-pill badge-info"%>
   </div>
 </div>
-
-<script type="text/javascript" charset="utf-8">
-  $(function () {
-    $('form#new_message').submit(function (event) {
-    //prevent form from submitting the default way
-    event.preventDefault();
-    var values = $(this).serialize();
-    var posting = $.post('/messages', values);
-    posting.done(function(data) {
-      let html = '<div style="font-size: 0.7em">' + data.posted_at +'</div><div>' + data.content + '</div>';
-      $('div.newmessage').html(html);
-      $('.new.text-info').html("Message");
-      Swal.fire({
-        type: 'success',
-        title: "Message was sent to " + data.friend.username,
-        showConfirmButton: false,
-        timer: 1200
-      })
-    });
-    })
-  })
-</script>

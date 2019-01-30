@@ -1,3 +1,11 @@
+function Message(message_hash) {
+  this.id = message_hash["id"];
+  this.content = message_hash["content"];
+  this.userimg = message_hash["user"]["image"];
+  this.username = message_hash["user"]["name"];
+  this.posted_at = message_hash["posted_at"];
+}
+
 let data = {"id": "", "content": ""};
 
 $(document).on('turbolinks:load', function () {
@@ -58,7 +66,6 @@ $(document).on('turbolinks:load', function () {
   })
 
   
-
   //Handle DELETING A POST request 
   $('a.delete_post').click(function (event) {
     event.preventDefault();
@@ -93,15 +100,43 @@ $(document).on('turbolinks:load', function () {
       }
     })
   });
+
+  //Handle UNFRIEND
+  $('.unfriend').click(function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    debugger;
+    let path = this;
+    Swal.fire({
+      title: 'Are you sure?',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Unfriend'
+    }).then((result) => {
+      if (result.value) {
+        $.ajax({
+          url: path.href,
+          type: "DELETE",
+          dataType: 'json',
+          success: function (data) { debugger;}
+          })
+          $(path).parents(".align-items-center").remove();
+          Swal.fire({
+            type: 'success',
+            title: "Unfriended successfully",
+            showConfirmButton: false,
+            timer: 1200
+          })
+      }
+      else {
+        Swal.fire("Cancelled", "Your friendship is safe!", "error");
+      }
+    })
+  })
 })
 
-function Message(message_hash) {
-  this.id = message_hash["id"];
-  this.content = message_hash["content"];
-  this.userimg = message_hash["user"]["image"];
-  this.username = message_hash["user"]["name"];
-  this.posted_at = message_hash["posted_at"];
-}
 
 function openMessages() {
   $(this).removeClass('active');
