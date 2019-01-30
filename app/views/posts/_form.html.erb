@@ -12,6 +12,6 @@
   <% end %>
 
   <%= f.hidden_field :user_id %>
-  <p><%= f.text_area :content, size: size %></p>
+  <p><%= f.text_area :content, size: size , class: 'form-control'%></p>
   <%= f.submit  class: 'btn btn-primary newpost' %>
 <% end %>

@@ -40,3 +40,21 @@
     </div>
   </div>
 </div>
+
+<%# Handlebars template for opening user messages %>
+<script id="open-message-template" type="text/x-handlebars-template">
+  {{#each this}}
+  <div class="row popup message">
+  <p><strong>{{user.username}}</strong>: {{content}}</p>
+  <p class="msgtime" style="font-size: 10px">{{posted_at}}</p>
+  </div>
+  {{/each}}
+</script>
+
+<%# Handlebars template for adding user new message %>
+<script id="new-message-template" type="text/x-handlebars-template">
+  <div class="row popup message">
+  <p><strong>{{user.username}}</strong>: {{content}}</p>
+  <p class="msgtime" style="font-size: 10px">{{posted_at}}</p>
+  </div>
+</script>

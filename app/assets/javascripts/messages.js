@@ -1,34 +1,39 @@
+let data = {"id": "", "content": ""};
+
 $(document).on('turbolinks:load', function () {
   // load each sender messages without refreshing page
+
   $('td.choice.text-center').on('click', openMessages)
 
   //set open first message by default
   $('#defaultOpen').click();
 
-  // prevent redirecting after creating a new message
+  // prevent redirecting for CREATING A NEW MESSAGE
   $('form#new_message').submit(function (event) {
     //prevent form from submitting the default way
     event.preventDefault();
+    event.stopPropagation();
     // Rescue preventDefault
     var values = $(this).serialize();
     var posting = $.post('/messages', values);
     posting.done(function (data) {
       // Handle response
-      let html = '<div class="row popup message"><p><strong>' + data.user.username + '</strong>: ' + data.content + '</p>' +
-        '<p class="msgtime" style="font-size: 10px">' + data.posted_at + '</p></div>';
-      $('div.messagedivs').append(html);
-      // debugger;
+      $('#message_content').val("");
+      let template = Handlebars.compile(document.getElementById("new-message-template").innerHTML);
+      let result = template(data)
+      $('div.messagedivs').append(result);
     });
   });
 
-  //Handle new post on home page
+  //Handle CREATING A NEW POST on home page
   $('form#new_post').submit(function (event) {
     event.preventDefault();
     event.stopPropagation();
     let values = $(this).serialize();
-    var template = Handlebars.compile(document.getElementById("post-template").innerHTML)
-    var posting = $.post('/posts', values);
+    let template = Handlebars.compile(document.getElementById("post-template").innerHTML)
+    let posting = $.post('/posts', values);
     posting.done(function (data) {
+      $('#post_content').val("");
       let post = new Post(data);
       let result = template(post);
       $(".homepage_feeds").prepend(result);
@@ -41,11 +46,23 @@ $(document).on('turbolinks:load', function () {
     })
   });
 
-  //Handle post delete request 
+  //Handle EDIT A NEW POST on home page
+  $('.edit_post').click(function (event) {
+    event.preventDefault();
+    let id = this.dataset['id'];
+    let content = $('.post-' + id).text();
+    data = {"id": id, "content": content}
+    let template = Handlebars.compile(document.getElementById("edit-post-template").innerHTML);
+    let result = template(data)
+    $('.post-'+id).html(result);
+  })
+
+  
+
+  //Handle DELETING A POST request 
   $('a.delete_post').click(function (event) {
     event.preventDefault();
     event.stopPropagation();
-    debugger;
     let path = this;
     Swal.fire({
       title: 'Are you sure?',
@@ -56,22 +73,20 @@ $(document).on('turbolinks:load', function () {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
-      debugger;
       if (result.value) {
         $.ajax({
           url: path.href,
           type: "DELETE",
           dataType: 'json',
-          success: function (data) {
-            console.log(data);
-            debugger;
-           }
+          success: function (data) {}
           })
-          Swal.fire(
-            'Deleted!',
-            'Your post has been deleted.',
-            'success'
-          )
+          $(path).parents(".post_parent").remove();
+          Swal.fire({
+            type: 'success',
+            title: "Your post has been deleted",
+            showConfirmButton: false,
+            timer: 1200
+          })
       }
       else {
         Swal.fire("Cancelled", "Your post is safe!", "error");
@@ -89,22 +104,44 @@ function Message(message_hash) {
 }
 
 function openMessages() {
-  // debugger;
   $(this).removeClass('active');
   $(this).addClass('active');
   let user_id = parseInt(this.dataset.user);
   let friend_id = parseInt(this.dataset.friend);
   let url = '/users/' + user_id + '/messages/' + friend_id;
   $.get(url, function (message) {
-    let $div = $('<div/>');
-    for (let i = 0; i < message.length; i++) {
-      let divs_messages = document.getElementsByClassName("messagedivs");
-      let html = '<div class="row popup message"><p><strong>' + message[i].user.username + '</strong>: ' + message[i].content + '</p>' +
-        '<p class="msgtime" style="font-size: 10px">' + message[i].posted_at + '</p></div>';
-      $div.append(html);
-      $('div.messagedivs').html($div);
-    }
+    let template = Handlebars.compile(document.getElementById("open-message-template").innerHTML);
+    let result = template(message);
+    $('div.messagedivs').html(result);
   })
   $('#message_friend_id').val(friend_id);
 }
 
+function editpost() {
+  let content = $('.postcontent').val();
+  let id = $('.postcontent').data().id;
+  if (content != "") {
+    $.ajax({
+      url: "/posts/" + id,
+      type: 'PATCH',
+      data: {'content': content},
+      success: function (data) {
+        $('.post-' + id).html(data.content);
+        Swal.fire({
+          type: 'success',
+          title: "Your post has been updated",
+          showConfirmButton: false,
+          timer: 1200
+      })}
+    })
+  }
+  else{
+    // warn user for trying to update an empty post
+    $('.postcontent').val("Sorry, You can't update an empty post!").css("color", "red");
+  }
+  }
+
+//cancel EDIT MESSAGE
+function canceledit() {
+  $('.post-' + data['id']).html(data['content']);
+}

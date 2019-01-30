@@ -1,8 +1,4 @@
-<% if flash[:message] %>
-    <div class="alert alert-success"><%= flash[:message] %></div>
-<% end %>
-
-  <div class="row">
+ <div class="row">
     <aside class="col-md-3">
       <section>
           <%= render partial: 'users/userinfo', locals: {user: @user}%>
@@ -14,7 +10,7 @@
         <% if flash[:warning] %>
             <p class="text-danger"><%= flash[:warning] %></p>
         <% end %>
-        <%= render partial: 'posts/form', locals: {post: @post, size: '35x8'}%>
+        <%= render partial: 'posts/form', locals: {post: @post, size: '38x8'}%>
       </section>
     </aside>
     <div class="col-md-1"></div>

@@ -1,5 +1,7 @@
 class PostsController < ApplicationController
+  # TODO: Ask about authentication for ruby
   skip_before_action :verify_authenticity_token
+
   def index
     @posts = Post.all
     @user = User.find(session[:current_user_id])
@@ -8,6 +10,7 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    render json: @post
   end
 
   def new
@@ -32,10 +35,10 @@ class PostsController < ApplicationController
 
   def update
     find_post
-    redirect_to '/', alert: "Action denied" if @post.nil?
-    if @post.id == session[:post_id] && @post.update(content: params[:post][:content])
-      flash[:message] = "Post updated"
-      redirect_to user_path(@user)
+    # redirect_to '/', alert: "Action denied" if @post.nil?
+    if @post && @post.update(content: params[:content])
+      render json: @post
+    # binding.pry
     else
       flash[:message] = "Action denied"
       render :edit
@@ -45,7 +48,6 @@ class PostsController < ApplicationController
   def destroy
     find_post
     @post.destroy
-    flash[:message] = "Post deleted"
     redirect_to '/'
   end
 
