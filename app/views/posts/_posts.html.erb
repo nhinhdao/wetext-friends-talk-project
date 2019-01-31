@@ -6,7 +6,7 @@
   <tbody class="homepage_feeds">
     <% feeds.each do |f| %>
       <tr class='post_parent'>
-        <td><img src="<%= f.user.image %>" style="width: 50px"></td>
+        <td class='avatar'><img src="<%= f.user.image %>" style="width: 50px"></td>
         <td>
           <span><%= link_to f.user.username, user_path(f.user)%></span>
           <span style="font-size: 0.6em">

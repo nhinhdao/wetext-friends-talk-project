@@ -17,6 +17,7 @@ class MessagesController < ApplicationController
   
   def new
     @friend = User.find(params[:user_id])
+    @message = Message.new
   end
   
   def create

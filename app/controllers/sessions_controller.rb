@@ -24,8 +24,8 @@ class SessionsController < ApplicationController
         flash[:message] = "Welcome back, #{@user.username}"
         redirect_to '/'
       else
-        flash[:notice] = "Hmm, We can't find you. Sorry, please try again!"
-        render :new
+        flash[:warning] = "Hmm, We can't find you. Sorry, please try again!"
+        render :new, :layout => 'loginpage'
       end
     elsif request.env['omniauth.auth'].present? #user logged in through facebook
       @user = User.find_or_create_by(uid: auth['uid']) do |u|
@@ -39,8 +39,8 @@ class SessionsController < ApplicationController
       flash[:message] = "Thank you for checking in, #{@user.username}"
       redirect_to '/'
     else
-      flash[:notice] = "Hmm, We can't find you. Sorry, please try again!"
-      render :new
+      flash[:warning] = "Hmm, We can't find you. Sorry, please try again!"
+      render :new, :layout => 'loginpage'
     end
   end
 

@@ -7,11 +7,11 @@
   <div class="col-2"></div>
   <div class="col-6">
     <div  class='col-4 text-center'><h1>Log In</h1></div>
-    <% if flash[:notice] %>
-        <div class="alert alert-warning"><%= flash[:notice] %></div>
+    <% if flash[:warning] %>
+        <div class="col-7" style="color: red"><%= flash[:warning] %></div>
     <% end %><br>
     <%= form_tag login_path, method: "post" do %>
-      <%= render 'form' %><br>
+      <%= render 'form' %>
       <%= submit_tag "Log In", class: "btn btn-primary" %>
     <% end %>
   </div>

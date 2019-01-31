@@ -29,8 +29,8 @@
                 <div><%= f.friend.email %></div>
               </td>
               <% if @user == current_user %>
-                <td><%= link_to "Send a message", new_user_message_path(f.friend), class: 'badge badge-pill badge-info' %></td>
-                <td><%= link_to 'Unfriend', connection_path(f), method: :delete, class: 'badge badge-pill badge-secondary unfriend'%></td>
+                <td><%= link_to "Send a message", new_user_message_path(f.friend), class: 'badge badge-info' %></td>
+                <td><%= link_to 'Unfriend', connection_path(f), method: :delete, class: 'badge badge-secondary unfriend'%></td>
               <% end %>
             </tr>
           <% end %>

@@ -1,6 +1,6 @@
 
 <div class="row align-center">
-  <div class="col-md-10 offset-md-1">
+  <div class="col-md-9 offset-md-1">
     <br>
     <h3 class="new text-info">Send a message</h3>
     <hr>
@@ -10,8 +10,15 @@
         <p class="text-danger"><%= flash[:warning] %></p>
     <% end %>
     <div class="newmessage">
-      <%= render partial: 'form', locals: {userid: current_user.id, friendid: @friend.id, message: Message.new}%>
+      <%= form_for @message, as: :message, url: messages_path, html: { class: "create-message", id: "create_message" } do |m| %>
+        <%= m.hidden_field :user_id, value: current_user.id %>
+        <%= m.hidden_field :friend_id, value: @friend.id %>
+        <p><%= m.text_area :content, class: "form-control newmsg"  %></p>
+        <%= m.submit 'Send',  class: 'btn btn-primary btn-sm' %>
+        <span class="message_fail"></span>
+      <% end %>
     </div>
+    <div class="posted" style="font-size: 10px"></div>
     <br>
     <%= link_to 'View All Messages', user_messages_path(current_user), class: "badge badge-pill badge-info"%>
   </div>

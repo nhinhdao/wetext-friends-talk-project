@@ -1,14 +1,10 @@
-<% if flash[:warning] %>
-    <div class="alert alert-danger"><%= flash[:warning] %></div>
-<% end %>
-
 <h1 class="text-center text-info">Messages</h1>
 <hr>
 
 <%# left pane: display avatar and email of a friend %>
-<div class="row">
+<div class="row messagepage">
   <div class="col-sm-2">
-    <div class="scroll">
+    <div class="scrollit">
       <table class="table table-bordered">
         <tbody>
             <% @uniq_users.each_with_index do |user, index|  %>
@@ -34,12 +30,13 @@
   <%# right pane: display chats between the selected friend and current_user %>
   <div class="col-8">
     <div class='messagedivs scrollit'></div>
-    <div class='formdiv' style="display: none">
+    <div class='formdiv'>
         <%= form_for(Message.new) do |m| %>
         <%= m.hidden_field :user_id, value: current_user.id %>
         <%= m.hidden_field :friend_id, value: 1 %>
         <%= m.text_area :content, size: '70x1', class: 'form-control'%>
         <%= m.submit 'Send',  class: 'btn btn-primary btn-sm sendbutton'%>
+        <span class="message_error"></span>
       <% end %>
     </div>
   </div>
@@ -52,7 +49,7 @@
       <tbody class="trmessages">
         {{#each this}}
           <tr>
-            <td class="text-center"><img src="{{user.image}}" class="msgimg align-self-center"></td>
+            <td class='avatar'><img src="{{user.image}}"></td>
             <td>
               <span class="msgtime" style="font-size: 10px">{{posted_at}}</span>
               <div class="post-{{id}}">{{content}}</div>        
@@ -68,7 +65,7 @@
 <%# Handlebars template for adding user new message %>
 <script id="new-message-template" type="text/x-handlebars-template">
   <tr>
-    <td><img src="{{user.image}}" class="msgimg align-self-center"></td>
+    <td class='avatar'><img src="{{userimg}}"></td>
     <td>
       <span class="msgtime" style="font-size: 10px">{{posted_at}}</span>
       <div class="post-{{id}}">{{content}}</div>        
