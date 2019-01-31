@@ -2,7 +2,6 @@ function Message(message_hash) {
   this.id = message_hash["id"];
   this.content = message_hash["content"];
   this.userimg = message_hash["user"]["image"];
-  this.username = message_hash["user"]["name"];
   this.posted_at = message_hash["posted_at"];
 }
 
@@ -16,42 +15,81 @@ $(document).on('turbolinks:load', function () {
   //set open first message by default
   $('#defaultOpen').click();
 
-  // prevent redirecting for CREATING A NEW MESSAGE
+  // prevent redirecting for CREATING A NEW MESSAGE on ALL MESSAGES PAGE
   $('form#new_message').submit(function (event) {
     //prevent form from submitting the default way
     event.preventDefault();
     event.stopPropagation();
     // Rescue preventDefault
-    var values = $(this).serialize();
-    var posting = $.post('/messages', values);
-    posting.done(function (data) {
-      // Handle response
-      $('#message_content').val("");
+    if ($('#message_content').val()) {
+      var values = $(this).serialize();
+      var posting = $.post('/messages', values);
       let template = Handlebars.compile(document.getElementById("new-message-template").innerHTML);
-      let result = template(data)
-      $('.trmessages').append(result);
-    });
+      posting.done(function (data) {
+        // Handle response
+        $('#message_content').val("");
+        $('.message_error').html("");
+        let message = new Message(data);
+        let result = template(message)
+        $('.trmessages').append(result);
+      });
+    }
+    else{
+      // warn user for trying to update an empty post
+      $('.message_error').html("Sorry, you can't send an empty message").css("color", "red");
+    }
+  });
+
+  // prevent redirecting for CREATING A NEW MESSAGE on NEW MESSAGE PAGE
+  $('form#create_message').submit(function (event) {
+    //prevent form from submitting the default way
+    event.preventDefault();
+    event.stopPropagation();
+    // Rescue preventDefault
+    if ($('.newmsg').val()) {
+      var values = $(this).serialize();
+      var posting = $.post('/messages', values);
+      posting.done(function (data) {
+        // Handle response
+        $('.message_fail').html();
+        let message = new Message(data);
+        $('div.newmessage').html(message.content);
+        $('div.posted').html("Sent: " + message.posted_at);
+        $('h3.new.text-info').html("New Message");
+      });
+    }
+    else{
+      // warn user for trying to update an empty post
+      $('.message_fail').html("Sorry, you can't send an empty message").css("color", "red");
+    }
   });
 
   //Handle CREATING A NEW POST on home page
   $('form#new_post').submit(function (event) {
     event.preventDefault();
     event.stopPropagation();
-    let values = $(this).serialize();
-    let template = Handlebars.compile(document.getElementById("post-template").innerHTML)
-    let posting = $.post('/posts', values);
-    posting.done(function (data) {
-      $('#post_content').val("");
-      let post = new Post(data);
-      let result = template(post);
-      $(".homepage_feeds").prepend(result);
-      Swal.fire({
-        type: 'success',
-        title: "Your post has been uploaded",
-        showConfirmButton: false,
-        timer: 1200
+    if ($('#post_content').val()) {
+      let values = $(this).serialize();
+      let template = Handlebars.compile(document.getElementById("post-template").innerHTML)
+      let posting = $.post('/posts', values);
+      posting.done(function (data) {
+        $('#post_content').val("");
+        $('.post_error').html("");
+        let post = new Post(data);
+        let result = template(post);
+        $(".homepage_feeds").prepend(result);
+        Swal.fire({
+          type: 'success',
+          title: "Your post has been uploaded",
+          showConfirmButton: false,
+          timer: 1200
+        })
       })
-    })
+    }
+    else {
+      // warn user for trying to update an empty post
+      $('.post_error').html("Sorry, It is an empty post!").css("color", "red");
+    }
   });
 
   //Handle EDIT A NEW POST on home page
@@ -143,7 +181,6 @@ $(document).on('turbolinks:load', function () {
     let values = $(path).parent().serialize();
     let posting = $.post('/connections', values);
     posting.done(function () {
-      debugger;
       $(path).parents(".user_list").remove();
       Swal.fire({
         type: 'success',
@@ -169,7 +206,6 @@ function openMessages() {
     $('div.messagedivs').html(result);
   })
   $('#message_friend_id').val(friend_id);
-  $('div.formdiv').css('display', '')
 }
 
 function editpost() {
