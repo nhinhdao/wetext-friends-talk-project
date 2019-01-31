@@ -35,22 +35,21 @@ td.choice.active {
   margin: 0 0 10px 0;
 }
 
-.msgimg {
-  max-width: 60px;
-  width: 100%;
-  margin-right: 20px;
-  border-radius: 50%;
+img{
+  width: 50px;
+  height: 40px;
+  border-radius: 30%;
 }
 
-img{
-  max-width: 50px;
-  width: 100%;
-  border-radius: 20%;
+img.avatarimg {
+  width: 100px;
+  height: 100px;
+  border-radius: 40%;
 }
 
 img.img-fluid{
-  max-width: 200px;
-  height:  200px;
+  width: 180px;
+  height:  180px;
 }
 
 .container-fluid {
@@ -69,4 +68,8 @@ img.img-fluid{
   .login{
     background: #d2e2e759;
   }
+}
+
+td.avatar{
+  width: 70px;
 }
