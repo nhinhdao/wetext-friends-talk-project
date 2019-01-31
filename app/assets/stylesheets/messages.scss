@@ -5,18 +5,26 @@
   box-sizing: border-box
 }
 
+
+.d-md-inline-block{
+  color: rgb(224, 222, 216);
+} 
+.d-md-inline-block:hover {
+  color: white;
+}
+
 body {
   font-family: "Lato", sans-serif;
 }
 
 /* Change background color of buttons on hover */
 td.choice:hover {
-  background-color: rgb(203, 217, 219);
+  background-color: rgb(197, 202, 212);
 }
 
 /* Create an active/current "tab button" class */
 td.choice.active {
-  background-color: #ccc;
+  background-color: rgb(189, 211, 209);
 }
 
 .message {
@@ -27,19 +35,38 @@ td.choice.active {
   margin: 0 0 10px 0;
 }
 
-td.choice:odd{
-  border-color: #ccc;
-  background-color: #ddd;
-}
-.popup::after {
-  content: "";
-  clear: both;
-  display: table;
-}
-
 .msgimg {
   max-width: 60px;
   width: 100%;
   margin-right: 20px;
   border-radius: 50%;
+}
+
+img{
+  max-width: 50px;
+  width: 100%;
+  border-radius: 20%;
+}
+
+img.img-fluid{
+  max-width: 200px;
+  height:  200px;
+}
+
+.container-fluid {
+  height: 100%;
+  background-image: image-url("wetext.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.loginpage{
+  position:absolute;
+  top:35%;
+  left:10%;
+  width: 80%;
+  .login{
+    background: #d2e2e759;
+  }
 }

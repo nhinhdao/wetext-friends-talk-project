@@ -2,13 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.d-md-inline-block{
-  color: rgb(206, 204, 204);
-} 
-.d-md-inline-block:hover {
-  color: white;
-}
-
 
 html,
 body {
@@ -20,12 +13,13 @@ body {
   height: 85%;
 }
 
-.popupMessage {
-  text-align: center;
-  color: black;
-  background: rgb(197, 219, 206);
-  width: 300px;
-  padding: 5px 6px 5px 6px;
-  border: 1px dashed gray;
-  font-size: 90%;
+.scrollit {
+  overflow-y: scroll;
+  height: 50%;
+  width: 100%;
+}
+
+.scroll {
+  overflow-y: scroll;
+  height: 60%;
 }
