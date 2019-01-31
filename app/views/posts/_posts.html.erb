@@ -11,7 +11,7 @@
           <span><%= link_to f.user.username, user_path(f.user)%></span>
           <span style="font-size: 0.6em">
             Posted <%= f.updated_at.strftime('%c') %>
-            <% if f.user == user %>
+            <% if f.user == current_user %>
             <strong>| <%= link_to "Edit ", edit_post_path(f), class: 'edit_post', data: { id: "#{f.id}" } %> |</strong>
             <strong><%= link_to "Delete", post_path(f), method: :delete, class: 'delete_post'%></strong>
             <% end %>

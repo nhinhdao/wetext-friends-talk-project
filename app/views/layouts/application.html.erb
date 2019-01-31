@@ -15,14 +15,14 @@
   <body>
     <nav class="site-header sticky-top py-1" style="background-color: #464849;" >
       <div class="container d-flex flex-column flex-md-row justify-content-between">
-        <strong><%= link_to "wetext", root_path, class: "py-2 d-none d-md-inline-block" %></strong>
         <% if current_user %>
+          <strong><%= link_to "wetext", root_path, class: "py-2 d-none d-md-inline-block font-weight-bold" %></strong>
           <%= link_to "My profile", user_path(current_user), class: "py-2 d-none d-md-inline-block" %>
           <%= link_to "Messages", user_messages_path(current_user), class: "py-2 d-none d-md-inline-block" %>
           <%= link_to "Friends", friends_path(current_user), class: "py-2 d-none d-md-inline-block" %>
           <%= link_to "Log Out", logout_path, method: :delete, class: "py-2 d-none d-md-inline-block" %>
         <% else %>
-          <li>Howdy! It is nice to meet you </li>
+          <li class="py-2 d-none d-md-inline-block font-weight-bold">Howdy! It is nice to meet you </li>
         <% end %>
       </div>
     </nav>

@@ -29,7 +29,7 @@ $(document).on('turbolinks:load', function () {
       $('#message_content').val("");
       let template = Handlebars.compile(document.getElementById("new-message-template").innerHTML);
       let result = template(data)
-      $('div.messagedivs').append(result);
+      $('.trmessages').append(result);
     });
   });
 
@@ -85,7 +85,7 @@ $(document).on('turbolinks:load', function () {
           url: path.href,
           type: "DELETE",
           dataType: 'json',
-          success: function (data) {}
+          success: function () {}
           })
           $(path).parents(".post_parent").remove();
           Swal.fire({
@@ -105,7 +105,6 @@ $(document).on('turbolinks:load', function () {
   $('.unfriend').click(function (event) {
     event.preventDefault();
     event.stopPropagation();
-    debugger;
     let path = this;
     Swal.fire({
       title: 'Are you sure?',
@@ -120,7 +119,7 @@ $(document).on('turbolinks:load', function () {
           url: path.href,
           type: "DELETE",
           dataType: 'json',
-          success: function (data) { debugger;}
+          success: function (data) {}
           })
           $(path).parents(".align-items-center").remove();
           Swal.fire({
@@ -135,11 +134,31 @@ $(document).on('turbolinks:load', function () {
       }
     })
   })
+
+  //Handle ADD FRIEND
+  $('.addfriend').click(function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    let path = this;
+    let values = $(path).parent().serialize();
+    let posting = $.post('/connections', values);
+    posting.done(function () {
+      debugger;
+      $(path).parents(".user_list").remove();
+      Swal.fire({
+        type: 'success',
+        title: "Connection Added Successfully",
+        showConfirmButton: false,
+        timer: 1200
+      })
+    })
+  });
 })
 
 
 function openMessages() {
-  $(this).removeClass('active');
+  //set active class on clicked user
+  $('td.choice.active').removeClass('active');
   $(this).addClass('active');
   let user_id = parseInt(this.dataset.user);
   let friend_id = parseInt(this.dataset.friend);
@@ -150,6 +169,7 @@ function openMessages() {
     $('div.messagedivs').html(result);
   })
   $('#message_friend_id').val(friend_id);
+  $('div.formdiv').css('display', '')
 }
 
 function editpost() {

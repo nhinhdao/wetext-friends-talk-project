@@ -7,35 +7,39 @@
 
 <%# left pane: display avatar and email of a friend %>
 <div class="row">
-  <div class="col-md-1">
-    <table class="table table-striped">
-      <thead></thead>
-      <tbody>
-          <% @uniq_users.each_with_index do |user, index|  %>
-          <div ></div>
-          <tr>
-            <% if index == 0 %>
-            <td class="choice text-center" id="defaultOpen" data-friend="<%= user.id %>" data-user="<%= session[:current_user_id] %>"><img src="<%= user.image %>" style="width: 50px">
-            <%= user.username  %></td>
-            <% else %>
-            <td class="choice text-center" data-friend="<%= user.id %>" data-user="<%= session[:current_user_id] %>"><img src="<%= user.image %>" style="width: 50px">
-            <%= user.username  %></td>
-            <% end %>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+  <div class="col-sm-2">
+    <div class="scroll">
+      <table class="table table-bordered">
+        <tbody>
+            <% @uniq_users.each_with_index do |user, index|  %>
+            <tr>
+              <% if index == 0 %>
+              <td class="choice text-center" id="defaultOpen" data-friend="<%= user.id %>" data-user="<%= session[:current_user_id] %>">
+                <span><img src="<%= user.image %>"></span><br>
+                <span><%= user.username  %></span>
+              </td>
+              <% else %>
+              <td class="choice text-center" data-friend="<%= user.id %>" data-user="<%= session[:current_user_id] %>">
+                <span><img src="<%= user.image %>"></span><br>
+                <span><%= user.username  %></span>
+              </td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
-  <div class="col-sm-1"></div>
+  <div class="col-1"></div>
   <%# right pane: display chats between the selected friend and current_user %>
-  <div class="col-md-9">
-    <div class='messagedivs'></div>
-    <div class='formdiv'>
-      <%= form_for(Message.new) do |m| %>
-      <%= m.hidden_field :user_id, value: current_user.id %>
-      <%= m.hidden_field :friend_id, value: 1 %>
-      <p><%= m.text_area :content, size: "100x3"  %></p>
-      <%= m.submit 'Send',  class: 'btn btn-primary btn-sm sendbutton' %>
+  <div class="col-8">
+    <div class='messagedivs scrollit'></div>
+    <div class='formdiv' style="display: none">
+        <%= form_for(Message.new) do |m| %>
+        <%= m.hidden_field :user_id, value: current_user.id %>
+        <%= m.hidden_field :friend_id, value: 1 %>
+        <%= m.text_area :content, size: '70x1', class: 'form-control'%>
+        <%= m.submit 'Send',  class: 'btn btn-primary btn-sm sendbutton'%>
       <% end %>
     </div>
   </div>
@@ -43,18 +47,31 @@
 
 <%# Handlebars template for opening user messages %>
 <script id="open-message-template" type="text/x-handlebars-template">
-  {{#each this}}
-  <div class="row popup message">
-  <p><strong>{{user.username}}</strong>: {{content}}</p>
-  <p class="msgtime" style="font-size: 10px">{{posted_at}}</p>
+  <div class="">
+    <table class="table">
+      <tbody class="trmessages">
+        {{#each this}}
+          <tr>
+            <td class="text-center"><img src="{{user.image}}" class="msgimg align-self-center"></td>
+            <td>
+              <span class="msgtime" style="font-size: 10px">{{posted_at}}</span>
+              <div class="post-{{id}}">{{content}}</div>        
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
   </div>
-  {{/each}}
 </script>
+
 
 <%# Handlebars template for adding user new message %>
 <script id="new-message-template" type="text/x-handlebars-template">
-  <div class="row popup message">
-  <p><strong>{{user.username}}</strong>: {{content}}</p>
-  <p class="msgtime" style="font-size: 10px">{{posted_at}}</p>
-  </div>
+  <tr>
+    <td><img src="{{user.image}}" class="msgimg align-self-center"></td>
+    <td>
+      <span class="msgtime" style="font-size: 10px">{{posted_at}}</span>
+      <div class="post-{{id}}">{{content}}</div>        
+    </td>
+  </tr>
 </script>

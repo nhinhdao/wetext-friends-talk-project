@@ -1,5 +1,5 @@
 <%= form_for(connection)  do |c|%>
 <%= c.hidden_field :user_id, value: current_user.id %>
 <%= c.hidden_field :friend_id, value: friend.id %>
-<%= c.submit 'Add friend', class: "btn btn-primary btn-sm"%>
+<%= c.submit 'Add friend', class: "btn btn-primary btn-sm addfriend"%>
 <% end %>
