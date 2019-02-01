@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   end
 
   resources :connections, only: [:create, :destroy]
-  resources :posts, except: [:edit]
+  resources :posts, except: [:edit, :update]
   resources :messages
 
   get 'login' => 'sessions#new'
