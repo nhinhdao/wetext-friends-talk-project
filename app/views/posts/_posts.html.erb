@@ -12,8 +12,8 @@
           <span style="font-size: 0.6em">
             Posted <%= f.updated_at.strftime('%c') %>
             <% if f.user == current_user %>
-            <strong>| <%= link_to "Edit ", edit_post_path(f), class: 'edit_post_homepage', data: { id: "#{f.id}" } %> |</strong>
-            <strong><%= link_to "Delete", post_path(f), method: :delete, class: 'delete_post'%></strong>
+            <strong>| <a href="/posts/<%= f.id %>/edit" class='edit_post_homepage' data-id="<%= f.id %>">Edit</a> |</strong>
+            <strong><a href="/posts/<%= f.id %>" class="delete_post" rel="nofollow" data-method="delete">Delete</a></strong>
             <% end %>
           </span>
           <div class="post-<%= f.id %>"><%= f.content %></div>        
@@ -30,8 +30,8 @@
     <td>
       <span><a href="/users/{{userid}}">{{username}}</a></span>
       <span style="font-size: 0.6em">
-        Posted {{posted_at}} | 
-        <strong><a href="/posts/{{id}}/edit" class='edit_post_homepage' data-id="{{id}}">Edit</a></strong> | 
+        Posted {{posted_at}}
+        <strong>| <a href="/posts/{{id}}/edit" class='edit_post_homepage' data-id="{{id}}">Edit</a> |</strong> 
         <strong><a href="/posts/{{id}}" class="delete_post" rel="nofollow" data-method="delete">Delete</a></strong>
       </span>
       <div class="post-{{id}}">{{content}}</div>        

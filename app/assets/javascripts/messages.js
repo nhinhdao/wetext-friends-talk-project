@@ -120,18 +120,19 @@ $(document).on('turbolinks:load', function () {
         $.ajax({
           url: path.href,
           type: "DELETE",
-          dataType: 'json'
-          })
-          $(path).parents(".post_parent").remove();
-          Swal.fire({
-            type: 'success',
-            title: "Your post has been deleted",
-            showConfirmButton: false,
-            timer: 1200
-          })
+          dataType: 'json',
+          success: function (data) {}
+        })
+        $(path).parents(".post_parent").remove();
+        Swal.fire({
+          type: 'success',
+          title: "Your post has been deleted",
+          showConfirmButton: false,
+          timer: 1200
+        })
       }
       else {
-        Swal.fire("Cancelled", "Your post is safe!", "error");
+        Swal.fire("Cancelled", "Your post is safe!", "error", 1200);
       }
     })
   });
@@ -165,7 +166,7 @@ $(document).on('turbolinks:load', function () {
           })
       }
       else {
-        Swal.fire("Cancelled", "Your friendship is safe!", "error");
+        Swal.fire("Cancelled", "Your friendship is safe!", "error", 1200);
       }
     })
   })
