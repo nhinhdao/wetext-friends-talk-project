@@ -90,7 +90,7 @@ $(document).on('turbolinks:load', function () {
   });
 
   //Handle EDIT A NEW POST on home page
-  $('.edit_post_homepage').click(function (event) {
+  $('a.edit_post_homepage').click(function (event) {
     event.preventDefault();
     event.stopPropagation();
     let id = this.dataset['id'];
@@ -120,8 +120,7 @@ $(document).on('turbolinks:load', function () {
         $.ajax({
           url: path.href,
           type: "DELETE",
-          dataType: 'json',
-          success: function () {}
+          dataType: 'json'
           })
           $(path).parents(".post_parent").remove();
           Swal.fire({

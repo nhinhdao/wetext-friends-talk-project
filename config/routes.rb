@@ -3,11 +3,11 @@ Rails.application.routes.draw do
 
   resources :users, shallow: true do
     resources :posts, except: [:new]
-    resources :messages
+    resources :messages, except: [:edit]
   end
 
   resources :connections, only: [:create, :destroy]
-  resources :posts
+  resources :posts, except: [:edit]
   resources :messages
 
   get 'login' => 'sessions#new'
