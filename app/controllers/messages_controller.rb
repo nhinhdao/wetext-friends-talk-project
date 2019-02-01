@@ -3,6 +3,8 @@ class MessagesController < ApplicationController
     @user = User.find(params[:user_id])
     @messages = Message.allmsgs(@user)
     @uniq_users = Message.uniq_users(@messages).delete_if {|user| user == @user}
+    ids = [@user.id, @uniq_users.first.id]
+    @pair_messages = Message.pair_messages(ids)
   end
   
   def all_messages

@@ -12,9 +12,6 @@ $(document).on('turbolinks:load', function () {
 
   $('td.choice.text-center').on('click', openMessages)
 
-  //set open first message by default
-  $('#defaultOpen').click();
-
   // prevent redirecting for CREATING A NEW MESSAGE on ALL MESSAGES PAGE
   $('form#new_message').submit(function (event) {
     //prevent form from submitting the default way
@@ -93,7 +90,7 @@ $(document).on('turbolinks:load', function () {
   });
 
   //Handle EDIT A NEW POST on home page
-  $('.edit_post').click(function (event) {
+  $('.edit_post_homepage').click(function (event) {
     event.preventDefault();
     let id = this.dataset['id'];
     let content = $('.post-' + id).text();

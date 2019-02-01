@@ -10,15 +10,15 @@
             <% @uniq_users.each_with_index do |user, index|  %>
             <tr>
               <% if index == 0 %>
-              <td class="choice text-center" id="defaultOpen" data-friend="<%= user.id %>" data-user="<%= session[:current_user_id] %>">
-                <span><img src="<%= user.image %>"></span><br>
-                <span><%= user.username  %></span>
-              </td>
+                <td class="choice text-center active" data-friend="<%= user.id %>" data-user="<%= session[:current_user_id] %>">
+                  <span><img src="<%= user.image %>"></span><br>
+                  <span><%= user.username  %></span>
+                </td>
               <% else %>
-              <td class="choice text-center" data-friend="<%= user.id %>" data-user="<%= session[:current_user_id] %>">
-                <span><img src="<%= user.image %>"></span><br>
-                <span><%= user.username  %></span>
-              </td>
+                <td class="choice text-center" data-friend="<%= user.id %>" data-user="<%= session[:current_user_id] %>">
+                  <span><img src="<%= user.image %>"></span><br>
+                  <span><%= user.username  %></span>
+                </td>
               <% end %>
             </tr>
           <% end %>
@@ -29,11 +29,27 @@
   <div class="col-1"></div>
   <%# right pane: display chats between the selected friend and current_user %>
   <div class="col-8">
-    <div class='messagedivs scrollit'></div>
+    <div class='messagedivs scrollit'>
+      <div>
+        <table class="table">
+          <tbody class="trmessages">
+            <% @pair_messages.each do |msg| %>
+              <tr>
+                <td class='avatar'><img src="<%= msg.user.image %>"></td>
+                <td>
+                  <span class="msgtime" style="font-size: 10px"><%= msg.updated_at.strftime('%D %r') %></span>
+                  <div class="post-{{id}}"><%= msg.content %></div>        
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
     <div class='formdiv'>
         <%= form_for(Message.new) do |m| %>
         <%= m.hidden_field :user_id, value: current_user.id %>
-        <%= m.hidden_field :friend_id, value: 1 %>
+        <%= m.hidden_field :friend_id, value: 2 %>
         <%= m.text_area :content, size: '70x1', class: 'form-control'%>
         <%= m.submit 'Send',  class: 'btn btn-primary btn-sm sendbutton'%>
         <span class="message_error"></span>
@@ -44,7 +60,7 @@
 
 <%# Handlebars template for opening user messages %>
 <script id="open-message-template" type="text/x-handlebars-template">
-  <div class="">
+  <div>
     <table class="table">
       <tbody class="trmessages">
         {{#each this}}
