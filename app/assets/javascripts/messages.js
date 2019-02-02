@@ -137,11 +137,14 @@ $(document).on('turbolinks:load', function () {
     })
   });
 
-  //Handle UNFRIEND
+
+  //Handle UNFRIEND on Friends Index Page
   $('.unfriend').click(function (event) {
     event.preventDefault();
     event.stopPropagation();
     let path = this;
+    let template = Handlebars.compile(document.getElementById("remove-friend-template").innerHTML);
+    let data = {friendId: this.dataset["id"]};
     Swal.fire({
       title: 'Are you sure?',
       type: 'warning',
@@ -158,6 +161,8 @@ $(document).on('turbolinks:load', function () {
           success: function (data) {}
           })
           $(path).parents(".align-items-center").remove();
+          let result = template(data);
+          $('div.new_friend').html(result);
           Swal.fire({
             type: 'success',
             title: "Unfriended successfully",
@@ -177,12 +182,15 @@ $(document).on('turbolinks:load', function () {
     event.stopPropagation();
     let path = this;
     let values = $(path).parent().serialize();
+    let template =  Handlebars.compile(document.getElementById("new-friend-template").innerHTML);
     let posting = $.post('/connections', values);
-    posting.done(function () {
+    posting.done(function (data) {
       $(path).parents(".user_list").remove();
+      let result = template(data);
+      $('div.new_friend').html(result);
       Swal.fire({
         type: 'success',
-        title: "Connection Added Successfully",
+        title: "Friend Added Successfully",
         showConfirmButton: false,
         timer: 1200
       })

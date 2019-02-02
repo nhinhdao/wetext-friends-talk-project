@@ -31,6 +31,20 @@
       <%= yield %>
     </div>
     <br>
+
+
+    <script id="new-friend-template" type="text/x-handlebars-template">
+      <div><a class="btn btn-info btn-sm" href="/users/{{friend_id}}/messages/new">Send a message</a></div>
+      <div><strong><a class="btn btn-primary btn-sm  unfriend" rel="nofollow" data-method="delete" data-id="{{friend_id}}" href="/connections/{{id}}">Unfriend</a></strong></div>
+    </script>
+
+    <script id="remove-friend-template" type="text/x-handlebars-template">
+      <%= form_for(current_user.connections.build)  do |c| %>
+      <%= c.hidden_field :user_id, value: current_user.id %>
+      <%= c.hidden_field :friend_id, value: "{{friendId}}" %>
+      <%= c.submit 'Add friend', class: "btn btn-primary btn-sm addfriend" %>
+      <% end %>
+    </script>
   </body>
 
 </html>

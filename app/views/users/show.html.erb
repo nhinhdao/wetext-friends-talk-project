@@ -5,14 +5,16 @@
     </section>
     <hr>
     <section>
-      <div><strong><%= link_to "Friends (#{@user.friends.count})", friends_path(@user) %></strong></div>
-      <% if @user.friend_with?(current_user) %>
-        <div><%= link_to "Send a message", new_user_message_path(@user), class: 'btn btn-info btn-sm' %></div>
-        <div><strong><%= link_to 'Unfriend', connection_path(@connection), method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-primary btn-sm'%></strong></div>
-      <% elsif @user.not_a_friend?(current_user) %>
-        <%= render partial: 'connections/addfriend', locals: {friend: @user, connection: current_user.connections.build} %>
+      <div><strong><%= link_to "Friends List", friends_path(@user), class: 'btn btn-secondary btn-sm'%></strong></div>
+      <div class='new_friend'>
+        <% if @user.friend_with?(current_user) %>
+          <div><a class="btn btn-info btn-sm" href="/users/<%= @user.id %>/messages/new">Send a message</a></div>
+          <div><strong><a class="btn btn-primary btn-sm  unfriend" rel="nofollow" data-method="delete" data-id="<%= @user.id %>" href="/connections/<%= @connection.id %>">Unfriend</a></strong></div>
+        <% elsif @user.not_a_friend?(current_user) %>
+            <%= render partial: 'connections/addfriend', locals: {friend: @user, connection: current_user.connections.build} %>
+      </div>
       <% elsif @user == current_user %>
-        <div><strong><%= link_to "Messages (#{@allmessages})", user_messages_path(@user)%></strong></div>
+        <div><strong><%= link_to "View Messages", user_messages_path(@user)%></strong></div>
         <div><strong><%= link_to 'Update Profile', edit_user_path(@user), class: 'btn btn-info btn-sm' %></strong></div>
       <% end %>
     </section>
