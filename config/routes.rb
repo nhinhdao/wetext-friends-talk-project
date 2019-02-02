@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     resources :messages, except: [:edit]
   end
 
-  resources :connections, only: [:create, :destroy]
+  resources :connections #, only: [:create, :destroy]
   resources :posts, except: [:edit, :update]
   resources :messages
 
