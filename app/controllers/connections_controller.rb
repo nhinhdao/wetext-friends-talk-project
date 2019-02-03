@@ -19,7 +19,6 @@ class ConnectionsController < ApplicationController
   def destroy
     @connection1 = Connection.find_by(id: params[:id])
     @connection2 = Connection.find_by(@connection1.get_ids)
-    binding.pry
     Connection.destroy([@connection1.id, @connection2.id])
     redirect_to '/'
   end
