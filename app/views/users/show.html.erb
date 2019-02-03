@@ -14,7 +14,7 @@
             <%= render partial: 'connections/addfriend', locals: {friend: @user, connection: current_user.connections.build} %>
       </div>
       <% elsif @user == current_user %>
-        <div><strong><%= link_to "View Messages", user_messages_path(@user)%></strong></div>
+        <div><strong><%= link_to "View Messages", user_messages_path(@user), class: 'btn btn-success btn-sm'%></strong></div>
         <div><strong><%= link_to 'Update Profile', edit_user_path(@user), class: 'btn btn-info btn-sm' %></strong></div>
       <% end %>
     </section>
