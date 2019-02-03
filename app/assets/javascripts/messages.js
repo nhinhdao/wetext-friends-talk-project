@@ -7,7 +7,7 @@ function Message(message_hash) {
 
 let data = {"id": "", "content": ""};
 
-$(document).on('turbolinks:load', function () {
+$(document).ready( function () {
   // load each sender messages without refreshing page
 
   $('td.choice.text-center').on('click', openMessages)
@@ -38,7 +38,7 @@ $(document).on('turbolinks:load', function () {
   });
 
   // prevent redirecting for CREATING A NEW MESSAGE on NEW MESSAGE PAGE
-  $('form#create_message').submit(function (event) {
+  $(".container").on("submit", "form#create_message", function (event) {
     //prevent form from submitting the default way
     event.preventDefault();
     event.stopPropagation();
@@ -62,7 +62,7 @@ $(document).on('turbolinks:load', function () {
   });
 
   //Handle CREATING A NEW POST on home page
-  $('form#new_post').submit(function (event) {
+  $(".container").on("submit", "form#new_post", function (event) {
     event.preventDefault();
     event.stopPropagation();
     if ($('#post_content').val()) {
@@ -90,7 +90,7 @@ $(document).on('turbolinks:load', function () {
   });
 
   //Handle EDIT A NEW POST on home page
-  $('a.edit_post_homepage').click(function (event) {
+  $(".container").on("click", "a.edit_post_homepage", function (event) {
     event.preventDefault();
     event.stopPropagation();
     let id = this.dataset['id'];
@@ -103,7 +103,7 @@ $(document).on('turbolinks:load', function () {
 
   
   //Handle DELETING A POST request 
-  $('a.delete_post').click(function (event) {
+  $(".container").on("click", "a.delete_post", function (event) {
     event.preventDefault();
     event.stopPropagation();
     let path = this;
@@ -139,7 +139,7 @@ $(document).on('turbolinks:load', function () {
 
 
   //Handle UNFRIEND on Friends Index Page
-  $('.unfriend').click(function (event) {
+  $(".container").on("click", ".unfriend", function (event) {
     event.preventDefault();
     event.stopPropagation();
     let path = this;
@@ -177,7 +177,7 @@ $(document).on('turbolinks:load', function () {
   })
 
   //Handle ADD FRIEND
-  $('.addfriend').click(function (event) {
+  $(".container").on("click", ".addfriend", function (event) {
     event.preventDefault();
     event.stopPropagation();
     let path = this;
