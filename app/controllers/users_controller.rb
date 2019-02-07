@@ -30,7 +30,7 @@ class UsersController < ApplicationController
     @connection = Connection.find_by(user_id: session[:current_user_id], friend_id: @user.id)
   respond_to do |f|
     f.html { render :show }
-    f.json { render json: @allmessages }
+    f.json { render json: @user }
   end
   end
 

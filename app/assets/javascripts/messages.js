@@ -10,7 +10,7 @@ let data = {"id": "", "content": ""};
 $(document).ready( function () {
   // load each sender messages without refreshing page
 
-  $('td.choice.text-center').on('click', openMessages)
+  $('td.choice.text-center').on('click', openMessages);
 
   // prevent redirecting for CREATING A NEW MESSAGE on ALL MESSAGES PAGE
   $('form#new_message').submit(function (event) {
@@ -27,7 +27,7 @@ $(document).ready( function () {
         $('#message_content').val("");
         $('.message_error').html("");
         let message = new Message(data);
-        let result = template(message)
+        let result = template(message);
         $('.trmessages').append(result);
       });
     }
@@ -67,13 +67,12 @@ $(document).ready( function () {
     event.stopPropagation();
     if ($('#post_content').val()) {
       let values = $(this).serialize();
-      let template = Handlebars.compile(document.getElementById("post-template").innerHTML)
       let posting = $.post('/posts', values);
       posting.done(function (data) {
         $('#post_content').val("");
         $('.post_error').html("");
         let post = new Post(data);
-        let result = template(post);
+        let result = post.renderHTML("post-template");
         $(".homepage_feeds").prepend(result);
         Swal.fire({
           type: 'success',
