@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>WETEXT</title>
+  <title>Wetext</title>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
@@ -44,6 +44,27 @@
       <%= c.hidden_field :friend_id, value: "{{friendId}}" %>
       <%= c.submit 'Add friend', class: "btn btn-primary btn-sm addfriend" %>
       <% end %>
+    </script>
+
+    <script id="friend-profile-template" type="text/x-handlebars-template">
+      <aside class="col-md-4 align-self-center">
+        <section>
+          <img src="{{image}}" class="avatar">
+          <h4>{{username}}</h4>
+          <div>{{email}}</div>
+        </section>
+      </aside>
+      <div class="col-md-8">
+        <br>
+        <h3 class="text-center text-info"  colspan="2">Posts</h3>
+        <hr>
+          {{#each posts}}
+          <span style="font-size: 0.6em">
+            Posted {{posted_at}}
+          </span>
+          <div class="post-{{this.id}}">{{content}}</div>        
+        {{/each}}
+      </div>
     </script>
   </body>
 

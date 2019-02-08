@@ -14,7 +14,7 @@
                 <img src="<%= f.image %>" style="width: 50px">
               </td>
               <td class="text-center">
-                <span><%= link_to f.username, user_path(f)%></span>
+                <span><%= link_to f.username, user_path(f), class: 'showUser'%></span>
                 <div><%= f.email %></div>
               </td>
               <td>
@@ -24,10 +24,14 @@
           <% end %>
         </tbody>
       </table>
-      <%= will_paginate @users, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
-      <div>
-        <%= link_to 'View all friends', friends_path(current_user), class: "badge badge-pill badge-info"%>
-      </div>
     </section>
+    <%= will_paginate @users, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+    <span>
+      <%= link_to 'View all friends', friends_path(current_user), class: "badge badge-pill badge-info"%>
+    </span>
   </div>
+</div>
+
+<div class="row showFriendProfile">
+  
 </div>
