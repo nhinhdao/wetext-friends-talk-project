@@ -4,7 +4,7 @@ function Post(post_hash) {
   this.userid = post_hash['user']['id'];
   this.username = post_hash['user']['username'];
   this.userimg = post_hash['user']['image'];
-  this.posted_at = post_hash['posted_at'];
+  this.postedAt = post_hash['posted_at'];
 }
 
 

@@ -2,7 +2,7 @@ function Message(message_hash) {
   this.id = message_hash["id"];
   this.content = message_hash["content"];
   this.userimg = message_hash["user"]["image"];
-  this.posted_at = message_hash["posted_at"];
+  this.postedAt = message_hash["posted_at"];
 }
 
 let data = {"id": "", "content": ""};
@@ -193,6 +193,19 @@ $(document).ready( function () {
         showConfirmButton: false,
         timer: 1200
       })
+    })
+  });
+
+  //Handle FRIENDS AND USERS LIST when clicked on an user
+  $(".container").on("click", ".showUser", function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    let path = this.href + ".json";
+    let template =  Handlebars.compile(document.getElementById("friend-profile-template").innerHTML);
+    $.get(path, function (data) {
+      let result = template(data);
+      $(".showFriendProfile").html(result).css("background", "#d2e2e759");
+      // debugger;
     })
   });
 })
