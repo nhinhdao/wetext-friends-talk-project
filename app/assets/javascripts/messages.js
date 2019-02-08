@@ -205,7 +205,6 @@ $(document).ready( function () {
     $.get(path, function (data) {
       let result = template(data);
       $(".showFriendProfile").html(result).css("background", "#d2e2e759");
-      // debugger;
     })
   });
 })
