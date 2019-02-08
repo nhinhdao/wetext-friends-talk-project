@@ -14,7 +14,7 @@ body {
 }
 
 .scrollit {
-  overflow-y: scroll;
+  overflow: auto;
   height: 85%;
   width: 100%;
 }
