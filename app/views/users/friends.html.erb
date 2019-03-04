@@ -19,13 +19,13 @@
           </tr>
         </thead>
         <tbody>
-          <% @user.connections.each do |f| %>
+          <% @friends.each do |f| %>
             <tr class="align-items-center">
               <td class='avatar'>
                 <img src="<%= f.friend.image %>" style="width: 40px">
               </td>
               <td>
-                <%= link_to f.friend.username, user_path(f.friend)%>
+                <%= link_to f.friend.username, user_path(f.friend), class: 'showUser'%>
                 <div><%= f.friend.email %></div>
               </td>
               <% if @user == current_user %>
@@ -36,6 +36,9 @@
           <% end %>
         </tbody>
       </table>
+      <%= will_paginate @friends, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
     </section>
   </div>
 </div>
+
+<div class="row showFriendProfile"></div>

@@ -14,11 +14,16 @@ body {
 }
 
 .scrollit {
-  overflow-y: scroll;
+  overflow: auto;
   height: 85%;
   width: 100%;
 }
 
 .row.messagepage{
   height: 80%;
+}
+
+.scrollPost {
+  overflow: auto;
+  height: 90%;
 }

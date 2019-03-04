@@ -1,6 +1,7 @@
 # wetext-friends-talk-project
+![Wetext](https://i.imgur.com/ueatOdc.png)
 
-This is the final version of rails-messages-transfer-project (a social web application for users to interact with friends) rebuilding with Ruby on Rails for back-end application, using AJAX, JQUERY and  and Javascript for front-end functionalities.
+A social web application using Ruby on Rails, Javascript, Ajax, and Jquery... to improve user experience by reducing reload/redirect...
 
 
 ## Installation

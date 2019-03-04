@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   def index
     @user = User.find_by(id: session[:current_user_id])
-    @users = User.other_users(@user).paginate(page: params[:page], per_page: 4)
+    @users = User.other_users(@user).paginate(page: params[:page], per_page: 3)
   end
 
   def new
@@ -30,7 +30,7 @@ class UsersController < ApplicationController
     @connection = Connection.find_by(user_id: session[:current_user_id], friend_id: @user.id)
   respond_to do |f|
     f.html { render :show }
-    f.json { render json: @allmessages }
+    f.json { render json: @user }
   end
   end
 
@@ -54,6 +54,7 @@ class UsersController < ApplicationController
 
   def friends
     @user = User.find(params[:id])
+    @friends = @user.connections.paginate(page: params[:page], per_page: 3)
   end
 
   private
