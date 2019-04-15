@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2018_11_07_233434) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "connections", force: :cascade do |t|
     t.integer "user_id"
     t.integer "friend_id"
@@ -38,7 +41,7 @@ ActiveRecord::Schema.define(version: 2018_11_07_233434) do
 
   create_table "users", force: :cascade do |t|
     t.string "username"
-    t.string "email"
+    t.string "email", default: "https://i.imgur.com/kNsHwNn.jpg"
     t.string "image"
     t.string "uid"
     t.string "password_digest"

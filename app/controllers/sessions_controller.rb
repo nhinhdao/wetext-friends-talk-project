@@ -21,7 +21,6 @@ class SessionsController < ApplicationController
       @user = User.find_by(:username => params[:username])
       if @user && @user.authenticate(params[:password])
         session[:current_user_id] = @user.id
-        flash[:message] = "Welcome back, #{@user.username}"
         redirect_to '/'
       else
         flash[:warning] = "Hmm, We can't find you. Sorry, please try again!"
@@ -36,7 +35,6 @@ class SessionsController < ApplicationController
         u.password_confirmation = 'nhinh12345'
       end
       session[:current_user_id] = @user.id
-      flash[:message] = "Thank you for checking in, #{@user.username}"
       redirect_to '/'
     else
       flash[:warning] = "Hmm, We can't find you. Sorry, please try again!"
