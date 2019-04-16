@@ -51,7 +51,7 @@ $(document).ready( function () {
         $('.message_fail').html();
         let message = new Message(data);
         $('div.newmessage').html(message.content);
-        $('div.posted').html("Sent: " + message.posted_at);
+        $('div.posted').html("Sent: " + message.postedAt);
         $('h3.new.text-info').html("New Message");
       });
     }
@@ -143,7 +143,7 @@ $(document).ready( function () {
     event.stopPropagation();
     let path = this;
     let template = Handlebars.compile(document.getElementById("remove-friend-template").innerHTML);
-    let data = {friendId: this.dataset["id"]};
+    let data = {userId: this.dataset["user"], friendId: this.dataset["id"]};
     Swal.fire({
       title: 'Are you sure?',
       type: 'warning',

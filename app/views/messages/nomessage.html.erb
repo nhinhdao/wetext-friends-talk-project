@@ -1,0 +1,17 @@
+
+
+<div class="row">
+  <aside class="col-md-4">
+    <section>
+      <%= render partial: 'users/userinfo', locals: {user: @user} %>
+    </section>
+    <hr>
+  </aside>
+  <div class="col-md-8">
+    <br>
+    <h1 class="text-center text-info">Messages</h1>
+    <hr>
+    <h5>You do not have any message at the moment. Please add more friends to continue!</h5>
+    <%= link_to 'User List',  users_path, class: 'btn btn-info btn-sm' %>
+  </div>
+</div>

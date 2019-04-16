@@ -2,9 +2,14 @@ class MessagesController < ApplicationController
   def index
     @user = User.find(params[:user_id])
     @messages = Message.allmsgs(@user)
-    @uniq_users = Message.uniq_users(@messages).delete_if {|user| user == @user}
-    ids = [@user.id, @uniq_users.first.id]
-    @pair_messages = Message.pair_messages(ids)
+    if @messages.length == 0
+      render :nomessage
+    else
+      @uniq_users = Message.uniq_users(@messages).delete_if {|user| user == @user}
+      ids = [@user.id, @uniq_users.first.id]
+      @pair_messages = Message.pair_messages(ids)
+      render :index
+    end
   end
   
   def all_messages

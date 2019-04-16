@@ -12,9 +12,7 @@ class UsersController < ApplicationController
     if params[:password] == params[:password_confirmation]
       @user = User.new(users_params)
       if @user && @user.save
-        @user.update(image: Gravatar.new("#{@user.email}").image_url + "?d=wavatar")
         session[:current_user_id] = @user.id
-        flash[:message] = "Thank you for signing up"
         render 'sessions/welcome'
       else
         render 'new'

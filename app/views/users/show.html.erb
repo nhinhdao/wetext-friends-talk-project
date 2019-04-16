@@ -9,7 +9,7 @@
       <div class='new_friend'>
         <% if @user.friend_with?(current_user) %>
           <div><a class="btn btn-info btn-sm" href="/users/<%= @user.id %>/messages/new">Send a message</a></div>
-          <div><strong><a class="btn btn-primary btn-sm  unfriend" rel="nofollow" data-method="delete" data-id="<%= @user.id %>" href="/connections/<%= @connection.id %>">Unfriend</a></strong></div>
+          <div><strong><a class="btn btn-primary btn-sm  unfriend" rel="nofollow" data-method="delete" data-id="<%= @user.id %>" data-user="<%= current_user.id %>" href="/connections/<%= @connection.id %>">Unfriend</a></strong></div>
         <% elsif @user.not_a_friend?(current_user) %>
             <%= render partial: 'connections/addfriend', locals: {friend: @user, connection: current_user.connections.build} %>
       </div>

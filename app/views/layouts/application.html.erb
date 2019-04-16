@@ -39,8 +39,8 @@
     </script>
 
     <script id="remove-friend-template" type="text/x-handlebars-template">
-      <%= form_for(current_user.connections.build)  do |c| %>
-      <%= c.hidden_field :user_id, value: current_user.id %>
+      <%= form_for(Connection.new)  do |c| %>
+      <%= c.hidden_field :user_id, value: "{{userId}}" %>
       <%= c.hidden_field :friend_id, value: "{{friendId}}" %>
       <%= c.submit 'Add friend', class: "btn btn-primary btn-sm addfriend" %>
       <% end %>
