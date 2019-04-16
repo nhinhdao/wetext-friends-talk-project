@@ -30,6 +30,8 @@ gem 'jquery-rails'
 
 gem 'pry'
 
+gem 'xmlrpc'
+
 gem 'faker'
 gem 'gravatar-ultimate'
 gem 'hirb'
